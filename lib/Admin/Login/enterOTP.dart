@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Admin/Home/hRMScreen.dart';
 import 'package:flutter_application_1/Admin/Login/ForgetPass.dart';
 import 'package:flutter_application_1/Admin/Login/SignUp/signUpAdminHR.dart';
 
@@ -277,7 +276,7 @@ class _EnterOTPState extends State<EnterOTP> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const SignInHR()));
+                                        builder: (context) => const SignUpHR()));
                               }),
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: BackgrnColor,

@@ -408,7 +408,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                                           10))),
                                           onPressed: (() {
                                             final user = AddNhanVien(
-                                              joiningdate: DateTime.parse(controllerdate.text),
+                                              // joiningdate: DateTime.parse(controllerdate.text),
                                               name: controllerName.text,
                                               numberphone: int.parse(controllerNumberPhone.text),
                                               designation: controllerDesignation.text, 
@@ -421,6 +421,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                        const AddSuccess()));
+                                            print('User${user}');
                                           }),
                                           child: const Text(
                                             'Save',
@@ -629,7 +630,7 @@ Future createNhanvienUser(AddNhanVien user) async {
 }
 //Make class for nhan vien
 class AddNhanVien {
-  late final DateTime joiningdate;
+  // late final DateTime joiningdate;
   String id;
   late final String name;
   late final int numberphone;
@@ -638,7 +639,7 @@ class AddNhanVien {
   late final String gender;
   late final String reference;
   AddNhanVien({
-    required this.joiningdate,
+    // required this.joiningdate,
     this.id = '',
     required this.name,
     required this.numberphone,
@@ -649,7 +650,7 @@ class AddNhanVien {
 
   });
   Map<String, dynamic> toJson()=>{
-    'joiningdate':joiningdate,
+    // 'joiningdate':joiningdate,
     'id':id,
     'name':name,
     'numberphone':numberphone,

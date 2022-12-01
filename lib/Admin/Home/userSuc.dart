@@ -5,8 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/employeeList.dart';
  
 class UserDetail extends StatefulWidget {
+  // final int id ;
+  // final String desination;
+  // final String name;
+  // final String reference;
+  // final String numberphone;
+  // final String workingday;
+  // final String documentId;
 
-  const UserDetail( String s, {super.key});
+  const UserDetail(String s, {super.key});
+
+  // const UserDetail(String s,{required Key key, required this.id, required this.name, required this.desination, required this.reference, required this.numberphone, required this.workingday, required this.documentId}) : super(key: key);
 
   @override
   State<UserDetail> createState() => _UserDetailState();
@@ -24,6 +33,15 @@ class _UserDetailState extends State<UserDetail> {
         print(document.reference);
         docIDs.add(document.reference.id);
     }));
+  }
+
+  Future DeleteData(int id) async {
+    final deletData = await FirebaseFirestore.instance.collection('AddNhanvien').doc(id as String?);
+   
+  }
+
+  Future<void> Edit(int id) async {
+    final editData = await FirebaseFirestore.instance.collection('AddNhanvien').doc(id as String?);
   }
 
   @override 
@@ -73,13 +91,13 @@ class GetUserInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // get the collection
-    CollectionReference nhanviens = FirebaseFirestore.instance.collection('AddNhanvien');
+    CollectionReference nhanviens = FirebaseFirestore.instance.collection('AddNhanvien').doc(documentId) as CollectionReference<Object?>;
     return FutureBuilder<DocumentSnapshot>(
       future: nhanviens.doc(documentId).get(),
       builder:((context, snapshot) {
         if(snapshot.connectionState == ConnectionState.done){
           Map<String, dynamic> data = 
-          snapshot.data!.data() as Map<String, dynamic>;
+          snapshot.data!.data() as Map<String, dynamic>;  
           return Stack(
             children: [
             Container(
@@ -173,7 +191,7 @@ class GetUserInformation extends StatelessWidget {
                               labelText: 'Employyee ID',
                             ),
                            ),
-                         ),
+                          ),
                          ),
                         ],
                       ),
@@ -282,11 +300,11 @@ class GetUserInformation extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10)
                                   )
                                 ),
-                                onPressed: (() {
-                                  final docUser = FirebaseFirestore.instance
+                                onPressed: (() async {
+                                  final deletUser = await FirebaseFirestore.instance
                                   .collection('AddNhanvien')
-                                  .doc('XaSANJSGxZrpEYkFR2Td');
-                                  docUser.delete();
+                                  .doc('yvA6B8Lywrga8JUBT9wl');
+                                  deletUser.delete();
                                 }),
                                 child:const Text('Delete') ),
                             ),
@@ -303,7 +321,7 @@ class GetUserInformation extends StatelessWidget {
                                   onPressed: (() {
                                      final docUser = FirebaseFirestore.instance
                                       .collection('AddNhanvien')
-                                      .doc('LVG9nkblhQ0PeD3QPsvR');
+                                      .doc('wfhlEMdj0VPplhipYZNW');
                                       // Update specific field
                                       docUser.update({
                                         'id' : 'null',
@@ -313,7 +331,7 @@ class GetUserInformation extends StatelessWidget {
                                         'Workingday' : 'null',
                                         'Gender' : 'Male',
                                         'Reference': 'null',
-                                        'LVG9nkblhQ0PeD3QPsvR' : FieldValue.delete(),// delete some parameter
+                                        'wfhlEMdj0VPplhipYZNW' : FieldValue.delete(),// delete some parameter
                                       });
                                       // docUser.set({
                                       //   'reference' : 'James'

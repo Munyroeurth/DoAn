@@ -324,7 +324,7 @@ Widget _Email (
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const SignInHR()));
+                                                    const SignUpHR()));
                                       },
                                       child: const Text('SIGN UP',
                                           style: TextStyle(

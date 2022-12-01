@@ -3,21 +3,25 @@ import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/hRMScreen.dart';
 import 'package:flutter_application_1/Admin/Login/signInScreen.dart';
+import 'package:flutter_application_1/User/Login/Home/HRMUser.dart';
+import 'package:flutter_application_1/User/Login/Home/login/widget_tree_admin.dart';
 
-class SignInHR extends StatefulWidget {
-  const SignInHR({super.key});
+class SignUpHR extends StatefulWidget {
+  const SignUpHR({super.key});
 
   @override
-  State<SignInHR> createState() => _SignInHRState();
+  State<SignUpHR> createState() => _SignUpHRState();
 }
  final countryPicker = const FlCountryCodePicker();
+ bool isVisible = true;
 CountryCode? countryCode;
-class _SignInHRState extends State<SignInHR> {
+class _SignUpHRState extends State<SignUpHR> {
 
   final _comapnyNameController = TextEditingController();
   final _adminNameContrpller = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  
 
   @override
   void dispose(){
@@ -33,9 +37,16 @@ class _SignInHRState extends State<SignInHR> {
   // final uid = user!.uid;
 
   Future signUp () async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    email: _emailController.text.toLowerCase().trim(),
-    password: _passwordController.text.trim());
+   final response = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: _emailController.text,
+    password: _passwordController.text)
+    .then((value){
+      print("Sign Up HR");
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>const HRMScreen()));
+    }).onError((error, stackTrace){
+      print("Error ${error.toString()}");
+    });
+    print("Sign Up ${response}");
   }
 
   @override
@@ -159,7 +170,7 @@ class _SignInHRState extends State<SignInHR> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 26, left: 24, right: 24),
                                 child: TextField(
-                                  //  controller: _emailController,
+                                   controller: _emailController,
                                    decoration: InputDecoration(
                                     hintText: 'maantheme@gmail.com',
                                     labelText: 'Email',
@@ -169,111 +180,121 @@ class _SignInHRState extends State<SignInHR> {
                       
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 26, left: 24, right: 24),
-                                child: TextField(
-                                
-                                textAlign: TextAlign.left,
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.done,
-                                // maxLength: 10,
-                                decoration: InputDecoration(
-                                    prefixIcon: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5, vertical: 3),
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 8),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          GestureDetector(
-                                              onTap: () async {
-                                                final code = await countryPicker
-                                                    .showPicker(
-                                                        context: context);
-                                                setState(() {
-                                                  countryCode = code;
-                                                });
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    height: 21,
-                                                    width: 32,
-                                                    child: countryCode != null
-                                                        ? countryCode!.flagImage
-                                                        : null,
-                                                  ),
-                                                  Container(
-                                                    height: 25,
-                                                    width: 50,
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 6,
-                                                        vertical: 5),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5),
-                                                      color: Colors.white,
-                                                    ),
-                                                    child: Text(
-                                                      countryCode?.dialCode ??
-                                                          '+1',
-                                                      // '+1',
-                                                      style: const TextStyle(
-                                                        color:
-                                                            Color(0xff9090AD),
-                                                        fontSize: 13,
-                                                        fontFamily: 'Manrope',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const Image(
-                                                    image: AssetImage(
-                                                        'Image/Vector.png'),
-                                                    height: 4,
-                                                    width: 7,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10),
-                                                    child: Container(
-                                                      height: 22,
-                                                      width: 1,
-                                                      color: Colors.grey,
-                                                    ),
-                                                  )
-                                                ],
-                                              ))
-                                        ],
-                                      ),
-                                    ),
-                                    // border: InputBorder.none,
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    labelText: 'Mobile Phone',
-                                    labelStyle: const TextStyle(
-                                      color: Color(0xff22215B),
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w400,
-                                    )),
-                            ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(top: 26, left: 24, right: 24),
+                              //   child: TextField(
+                              
+                              //   textAlign: TextAlign.left,
+                              //   keyboardType: TextInputType.number,
+                              //   textInputAction: TextInputAction.done,
+                              //   // maxLength: 10,
+                              //   decoration: InputDecoration(
+                              //       prefixIcon: Container(
+                              //         padding: const EdgeInsets.symmetric(
+                              //             horizontal: 5, vertical: 3),
+                              //         margin: const EdgeInsets.symmetric(
+                              //             horizontal: 8),
+                              //         child: Row(
+                              //           mainAxisSize: MainAxisSize.min,
+                              //           children: [
+                              //             GestureDetector(
+                              //                 onTap: () async {
+                              //                   final code = await countryPicker
+                              //                       .showPicker(
+                              //                           context: context);
+                              //                   setState(() {
+                              //                     countryCode = code;
+                              //                   });
+                              //                 },
+                              //                 child: Row(
+                              //                   children: [
+                              //                     Container(
+                              //                       height: 21,
+                              //                       width: 32,
+                              //                       child: countryCode != null
+                              //                           ? countryCode!.flagImage
+                              //                           : null,
+                              //                     ),
+                              //                     Container(
+                              //                       height: 25,
+                              //                       width: 50,
+                              //                       padding: const EdgeInsets
+                              //                               .symmetric(
+                              //                           horizontal: 6,
+                              //                           vertical: 5),
+                              //                       decoration: BoxDecoration(
+                              //                         borderRadius:
+                              //                             BorderRadius.circular(
+                              //                                 5),
+                              //                         color: Colors.white,
+                              //                       ),
+                              //                       child: Text(
+                              //                         countryCode?.dialCode ??
+                              //                             '+1',
+                              //                         // '+1',
+                              //                         style: const TextStyle(
+                              //                           color:
+                              //                               Color(0xff9090AD),
+                              //                           fontSize: 13,
+                              //                           fontFamily: 'Manrope',
+                              //                         ),
+                              //                       ),
+                              //                     ),
+                              //                     const Image(
+                              //                       image: AssetImage(
+                              //                           'Image/Vector.png'),
+                              //                       height: 4,
+                              //                       width: 7,
+                              //                     ),
+                              //                     Padding(
+                              //                       padding:
+                              //                           const EdgeInsets.only(
+                              //                               left: 10),
+                              //                       child: Container(
+                              //                         height: 22,
+                              //                         width: 1,
+                              //                         color: Colors.grey,
+                              //                       ),
+                              //                     )
+                              //                   ],
+                              //                 ))
+                              //           ],
+                              //         ),
+                              //       ),
+                              //       // border: InputBorder.none,
+                              //       border: OutlineInputBorder(
+                              //           borderRadius:
+                              //               BorderRadius.circular(10)),
+                              //       labelText: 'Mobile Phone',
+                              //       labelStyle: const TextStyle(
+                              //         color: Color(0xff22215B),
+                              //         fontSize: 14.0,
+                              //         fontWeight: FontWeight.w400,
+                              //       )),
+                              //   ),
+                              // ),
                                Padding(
-                                padding: const EdgeInsets.only(top: 26, left: 24, right: 24),
+                                padding:  EdgeInsets.only(top: 26, left: 24, right: 24),
                                 child: TextField(
+                                  obscureText: isVisible,
                                   controller: _passwordController,
                                    decoration: InputDecoration(
                                     hintText: '**********',
                                     labelText: 'Password',
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isVisible = !isVisible;
+                                        });
+                                      }, 
+                                      icon: isVisible == true
+                                      ? const Icon(Icons.visibility_off)
+                                      :const Icon(Icons.visibility)),
                                     border: OutlineInputBorder(
                                       borderRadius:
-                                        BorderRadius.circular(10))),
+                                        BorderRadius.circular(10)),
                                 ),
-                              ),
+                              )),
                               Padding(
                                 padding: const EdgeInsets.only(
                                     top: 26, left: 24, right: 24),
@@ -286,11 +307,12 @@ class _SignInHRState extends State<SignInHR> {
                                             borderRadius:
                                                 BorderRadius.circular(10))),
                                     onPressed: (() {
+                                      signUp();
                                       print('VaoDya');
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => HRMScreen()));
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => WidgetTreeAdmin()));
                                     }),
                                     child: const Text(
                                       'Sing Up',

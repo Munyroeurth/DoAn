@@ -19,7 +19,7 @@ class _WidgetTreeUserState extends State<WidgetTreeUser> {
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return  HRMUserScreen();
+          return  const HRMUserScreen();
         } else {
           return const LoginPage();
         }

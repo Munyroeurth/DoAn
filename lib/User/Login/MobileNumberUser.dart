@@ -40,7 +40,7 @@ class _MobileOTPUserState extends State<MobileOTPUser> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const SignInUser()));
+                                          const SignUpUser()));
                             }),
                             icon: const Icon(
                               Icons.arrow_back,

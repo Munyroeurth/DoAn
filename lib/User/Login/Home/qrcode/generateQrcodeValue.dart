@@ -77,6 +77,7 @@ class _BooingQRGenerateState extends State<BooingQRGenerate> {
     return Container(
       color: Color(0xFFFFFF),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Card(
             elevation:  8.0,

@@ -5,8 +5,10 @@ import 'package:flutter_application_1/User/Login/Home/AttendRequest.dart';
 import 'package:flutter_application_1/User/Login/Home/PhiChiLuong.dart';
 import 'package:flutter_application_1/User/Login/Home/qrcode/homeqrcodeScreen.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
+import 'package:flutter_application_1/User/Login/signUpUser.dart';
 import 'package:flutter_application_1/src/API/API_DIO/Post/PostDio.dart';
 import 'package:flutter_application_1/src/widget/linearprogressbar.dart';
+
 
 
 class HRMUserScreen extends StatefulWidget {
@@ -20,21 +22,59 @@ const BackgrnColor = Color(0xff567DF4);
 class _HRMUserScreenState extends State<HRMUserScreen> {
 
   final nhanvien = FirebaseAuth.instance.currentUser!;
+
   List<String> docIDs = [];
    // Get docIDs
    Future getDocIDs () async {
-    await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
-      (snapshot) => snapshot.docs.forEach((document) {
-        print(document.reference);
-        docIDs.add(document.reference.id);
-      })
-    );
+     final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
+      (QuerySnapshot snapshot) => snapshot.docs.forEach(
+        (DocumentSnapshot doc){
+        print(doc.data);
+        // print(doc.documentID);
+        // print(document.reference);
+        // docIDs.add(document.reference.id);
+        // print('doIDs ${docIDs}');
+      },
+    ));
    }
+  @override 
+  void initState(){
+    getDocIDs();
+    super.initState();
+  }
+  //  PlatformFile? pickedFiles;
+  //  UploadTask? uploadTask;
+  //  Future selectFile() async {
+  //   final result = await FilePicker.platform.pickFiles();
+  //   if(result == null) return;
+  //   setState(() {
+  //     pickedFiles = result.files.first;
+  //   });
+  //  }
+
+  //  Future UploadFile () async {
+  //   final path = 'files/${pickedFiles!.name}';
+  //   // final file = File(pickedFiles!.path!);
+
+  //   final ref = FirebaseStorage.instance.ref().child(path);
+  //   setState(() {
+  //   //  uploadTask = ref.putFile(file);
+  //  });
+  //   final snapshot = await uploadTask!.whenComplete((){
+
+  //   });
+  //   final urlDownload = await snapshot.ref.getDownloadURL();
+  //   print('Download Link: $urlDownload');
+  //   setState(() {
+  //     uploadTask = null;
+  //   });
+  //  }
 
   final User? user = Auth().currentUser;
 
   Future<void> signOut() async {
     await Auth().signOut();
+    print("Sign Out");
   }
   Future<void> edit() async {
     await Auth().edit();
@@ -46,22 +86,25 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
     return Text(user?.email ?? 'User Email', style: const TextStyle(fontSize: 14),);
   }
 
-   Widget _signOutButton() {
-    return SizedBox(
-      height: 53,
-      width: 400,
-      child: ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xff567DF4),
-        // minimumSize: Size(327, 54),
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(10))),
-        onPressed: signOut,
-        child: const Text('Sign Out', style: TextStyle(fontSize: 20),),
-      ),
-    );
+  Widget _signOutButton() {
+  return SizedBox(
+    height: 53,
+    width: 400,
+    child: ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xff567DF4),
+      // minimumSize: Size(327, 54),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(10))),
+      onPressed: (() {
+        signOut();
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpUser()));
+      }),
+      child: const Text('Sign Out', style: TextStyle(fontSize: 20),),
+    ),
+  );
   }
 
   @override
@@ -215,7 +258,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            PostDio()));
+                                                                            const PostDio()));
                                                           }),
                                                           child: const Image(
                                                               image: AssetImage(
@@ -289,7 +332,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            AttendRequest()));
+                                                                            const AttendRequest()));
                                                           }),
                                                           child: const Image(
                                                               image: AssetImage(
@@ -383,7 +426,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            QrCodeScreen()));
+                                                                            const QrCodeScreen()));
                                                           }),
                                                           child: const Image(
                                                               image: AssetImage(
@@ -467,7 +510,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            PhieuLuong()));
+                                                                            const PhieuLuong()));
                                                           }),
                                                           child: const Image(
                                                               image: AssetImage(
@@ -513,6 +556,8 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
       ),
     );
   }
+
+
 _ProfileModal(context,){
   String value = 'profile';
   showDialog(context: context,
@@ -750,19 +795,29 @@ _ProfileModal(context,){
                 child: Expanded(
                   child: Column(
                     children: const [
-                     SizedBox(
+                    // if(pickedFiles !=null)
+                       SizedBox(
                       height: 100,
                       width: 100,
                        child: CircleAvatar(
-                        backgroundColor: Color.fromARGB(255, 55, 59, 57),
-                        radius: 100,
-                        backgroundImage: AssetImage('Image/profile.png'),
-                    ),
-                    ), //CircleAv
-                    Padding(
+                       backgroundColor: Color.fromARGB(255, 55, 59, 57),
+                       radius: 100,
+                       backgroundImage: AssetImage('Image/profile.png'),
+                       // backgroundImage: AssetImage('pickedFile!.name'),
+                       // child: Image.file(
+                       //   File(pickedFiles?.path),
+                       //   width: double.infinity,
+                       //   fit: BoxFit.cover,
+                       // ),
+                      ),
+                      ),//CircleA ,)
+                      Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text('Nguyễn Anh Tuấn'),
                       ),
+                      // const ElevatedButton(onPressed: null, child: Text('Select file')),
+                      // ElevatedButton(onPressed: UploadFile, child: const Text('Upload file')),
+                      // buildProgress(),
                     ],
                   ),
                 ),
@@ -773,6 +828,36 @@ _ProfileModal(context,){
   });
 }
 }
+
+// Widget buildProgress()=> StreamBuilder<TaskSnapshot>(
+//   stream: UploadTask.snapshotEvents,
+//   builder:((context, snapshot){
+//     if(snapshot.hasData){
+//       final data = snapshot.data;
+//       double progress = data?.bytesTransferred! / data!.totalBytes;
+//       return SizedBox(
+//         height: 50,
+//         child: Stack(
+//           fit: StackFit.expand,
+//           children: [
+//             LinearProgressIndicator(
+//               value: progress,
+//               backgroundColor: Colors.green,
+//               color: Colors.grey,
+//             ),
+//             Center(
+//               child: Text('${(100*progress).roundToDouble()}%',
+//               style: const TextStyle(color: Colors.white)),
+//             )
+//           ],
+//         ),
+//       );
+
+//     }else{
+//       return const SizedBox(height: 50,);
+//     }
+//   }));
+
 
 class ProfileNV extends StatelessWidget {
   final String profileId;
@@ -792,3 +877,5 @@ class ProfileNV extends StatelessWidget {
       );
   }
 }
+
+

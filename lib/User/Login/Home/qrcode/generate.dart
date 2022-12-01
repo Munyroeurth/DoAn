@@ -1,7 +1,9 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/User/Login/Home/qrcode/homeqrcodeScreen.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:ffi';
 
 class generate extends StatefulWidget {
   const generate({super.key});
@@ -12,6 +14,14 @@ class generate extends StatefulWidget {
 
 class _generateState extends State<generate> {
   String qrData = "https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/(S(23ljqbc1g2glmncz4ivhpbo3))/StudyRegister/StudyRegister.aspx";
+
+  final docDatas = [];
+
+  Future DatasQrcode () async{
+    final dataqrcode = await FirebaseFirestore.instance.collection('user').add('qrData' as Map<String, dynamic>);
+    debugPrint('dataqrcode${dataqrcode}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +53,7 @@ class _generateState extends State<generate> {
                       ),
                     ),
                 ),
-                Positioned(
+                Positioned( 
                   top: 123,
                   bottom: 0,
                   right: 0,
@@ -65,7 +75,14 @@ class _generateState extends State<generate> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            QrImage(data: qrData),
+                            QrImage(
+                              data: qrData,
+                              version: QrVersions.auto,
+                              gapless: false,
+                              size: 200,
+                              embeddedImage: const AssetImage('Image/Qcode.png'),
+                              embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(50,50)),
+                             ), 
                             const Text('Get Your Data/Link to the QR CODE ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                             TextField(
                               autofocus: true,
@@ -74,6 +91,24 @@ class _generateState extends State<generate> {
                               // ignore: prefer_const_constructors
                               decoration: InputDecoration(
                                 hintText: "Enter the Data/LINK"
+                              ),
+                            ),
+                             TextField(
+                              autofocus: true,
+                              keyboardType: TextInputType.text,
+                              controller: idText,
+                              // ignore: prefer_const_constructors
+                              decoration: InputDecoration(
+                                hintText: "Data Id"
+                              ),
+                            ),
+                             TextField(
+                              autofocus: true,
+                              keyboardType: TextInputType.text,
+                              controller: nameText,
+                              // ignore: prefer_const_constructors
+                              decoration: InputDecoration(
+                                hintText: "Name"
                               ),
                             ),
                             Padding(
@@ -91,14 +126,13 @@ class _generateState extends State<generate> {
                                     if(qrText.text.isEmpty){
                                       setState(() {
                                         qrData = "https://flutter.dev";
-                                      });
-                                          
+                                      });   
                                     }else{
                                      setState(() {
                                         qrData = qrText.text;
-                                     });
-                                          
+                                     });  
                                     }
+                                    print("qrcodeData${qrData}");
                                   },
                                   child: const Text('QENERATE QRCODE'),
                                 ),
@@ -108,7 +142,8 @@ class _generateState extends State<generate> {
                         ),
                       ),
                     ),
-                  ), )
+                  ), 
+                )
               ],
             ),
           ),
@@ -117,4 +152,13 @@ class _generateState extends State<generate> {
     );
   }
   final qrText = TextEditingController();
+  final idText = TextEditingController();
+  final nameText = TextEditingController();
+}
+
+class DatasUserQrcode {
+  String id = '';
+  String name ='';
+  String desination = '';
+  DatasUserQrcode({required this.desination, required this.id, required this.name});
 }

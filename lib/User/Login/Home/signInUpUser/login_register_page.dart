@@ -38,18 +38,20 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> createUserWithEmailAndPassword(bool isLogin) async {
     try {
-      await Auth().createUserWithEmailAndPassword(
+      final response = await Auth().createUserWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
         employeeId:_controllerId.text,
       );
+      // print('createUserResult ${response}');
     } on FirebaseAuthException catch (e) {
-      setState(() {
+      setState((){
         errorMessage = e.message;
       });
     }
   }
   void onpressedFunction(){
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>const HRMUserScreen()));
     if (isLogin == true) {
       signInWithEmailAndPassword(isLogin);
     }else{
@@ -121,8 +123,8 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    const ForgetPassUser()));
+              builder: (context) =>
+                  const ForgetPassUser()));
       },
       child: const Text(
         'Forget Password ?',
@@ -152,7 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius:
                     BorderRadius.circular(10))
         ),  
-
         child: const Text('Sign In', style: TextStyle(fontSize: 23),),
       ),
     );
@@ -324,7 +325,7 @@ class _LoginPageState extends State<LoginPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const SignInUser()));
+                                              const SignUpUser()));
                                 },
                                 child: const Text('SIGN UP',
                                     style: TextStyle(

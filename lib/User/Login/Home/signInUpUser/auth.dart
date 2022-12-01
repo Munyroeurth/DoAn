@@ -14,13 +14,6 @@ class Auth {
   }) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email );
   }
-
-  // Future<void> sendEmployeeId({
-  //   required String  employeeid ,
-  // }) async {
-  //   await _firebaseAuth. sendEmployeeId(employeeid :employeeid);
-  // }
-
   Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,

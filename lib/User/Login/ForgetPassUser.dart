@@ -1,6 +1,5 @@
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/User/Login/Home/signInUpUser/login_register_page.dart';
 import 'package:flutter_application_1/User/Login/MobileNumberUser.dart';
 import 'package:flutter_application_1/User/Login/signUpUser.dart';
 
@@ -41,7 +40,7 @@ class _ForgetPassUserState extends State<ForgetPassUser> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const SignInUser()));
+                                           const SignUpUser()));
                             }),
                             icon: const Icon(
                               Icons.arrow_back,

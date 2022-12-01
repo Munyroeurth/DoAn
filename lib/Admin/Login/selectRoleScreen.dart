@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_1/Admin/Login/SignUp/signUpAdminHR.dart';
+import 'package:flutter_application_1/User/Login/Home/signInUpUser/widget_tree_user.dart';
 import '../../User/Login/Home/login/widget_tree_admin.dart';
-import '../../User/Login/Home/signInUpUser/widget_tree_user.dart';
 
 
 

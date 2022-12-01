@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -11,9 +14,14 @@ class Scan extends StatefulWidget {
 
 class _ScanState extends State<Scan> {
 
-  // final controller = TextEditingController();
+  final controllerqrcodeData = TextEditingController();
 
   String qrcodeResult = "Unknow";
+
+Future PostData() async {
+  final postData = await FirebaseFirestore.instance.collection('AddNhanvien').doc('NYJGg7ChWO8NXzy16rMr').set(qrcodeResult as Map<String, dynamic>);
+  // debugPrint('PostData $');
+}
   
   @override
   Widget build(BuildContext context) {
@@ -108,16 +116,25 @@ class _ScanState extends State<Scan> {
                               offset: const Offset(0,2))],
                             color: const Color.fromARGB(255, 230, 222, 222),
                             borderRadius:BorderRadius.circular(10)),
-                            
-                            child: Padding(
+                            child: Column(
+                              children: [
+                              TextFormField(
+                                controller: controllerqrcodeData,
+                                decoration: const InputDecoration(
+                                  hintText: "qrcodeResult"
+                                ),
+                              ),
+                              Padding(
                               padding: const EdgeInsets.only(top: 50, right: 10, left: 10),
                               child: Text(qrcodeResult,
                               textAlign: TextAlign.center, 
                               style: const TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 15),),
+                              ),
+                              ],
                             ),
-                          ),
+                            ),
                           ),
                         Padding(
                           padding: const EdgeInsets.only(top: 70),
@@ -131,8 +148,12 @@ class _ScanState extends State<Scan> {
                               )
                             ),
                             onPressed: (() {
+                              Map<String,dynamic> dataqrcode = {"qrcodeLink":qrcodeResult};
+                              FirebaseFirestore.instance.collection('AddNhanvien').doc('NYJGg7ChWO8NXzy16rMr').update(dataqrcode);
+                              PostData();
                               ScanBarcode();
                               print('ScanBarcode ${ScanBarcode}');
+                              print('Qrcode');
                             }),
                             // () async {
                             //   // controller : controller;
@@ -153,7 +174,7 @@ class _ScanState extends State<Scan> {
                 ),
               ]
             )
-         )),
+          )),
         ],
       ),
     );
@@ -166,6 +187,7 @@ class _ScanState extends State<Scan> {
       setState(() {
         this.qrcodeResult = qrcodeResult;
       });
+      print('qrcodeResultaaaaaaaaaa $qrcodeResult');
    } on PlatformException {
     qrcodeResult = 'Failed to get platform version';
    }

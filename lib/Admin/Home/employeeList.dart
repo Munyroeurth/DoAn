@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_application_1/Admin/Home/eddSuc.dart';
@@ -30,6 +32,17 @@ class _EmployeeListState extends State<EmployeeList> {
         // print('doIDs ${docIDs}');
       },
     ));
+  }
+
+  Future<void> NvigateIDUSer() async {
+
+    final responseIdUser = await FirebaseFirestore.instance.collection('AddNhanvienn').get().then(
+      (snapshot) => snapshot.docs.forEach((element) {
+        print(element.reference);
+        docIDs.add(element.reference.id);
+      })
+    );
+
   }
 
   @override
@@ -238,7 +251,7 @@ class CustomSearch extends SearchDelegate {
   List<String> docIDs = [];
 
   Future getDocIDs () async {
-    await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
+    final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
       (snapshot) => snapshot.docs.forEach(
         (document){
         print(document.reference);
@@ -246,8 +259,9 @@ class CustomSearch extends SearchDelegate {
         // print('doIDs ${docIDs}');
       },
     ));
+    
   }
-
+  
   @override
   List<Widget>? buildActions(BuildContext context) {
      return[
@@ -274,6 +288,7 @@ class CustomSearch extends SearchDelegate {
     for(var item in docIDs){
       if(item.toLowerCase().contains(query.toLowerCase())){
         matchQuery.add(item);
+        this.docIDs = docIDs;
       }else{
         getDocIDs();
       }
@@ -287,7 +302,7 @@ class CustomSearch extends SearchDelegate {
         var resualt = matchQuery[index];
         // var resualtSearch = docIDs[index];
         return ListTile(
-          title: GetNhanVienInformation(documentId: resualt)
+          title: GetNhanVienInformation(documentId: resualt[index])
           // title: Text(resualt)
           );
         }
@@ -311,11 +326,12 @@ class CustomSearch extends SearchDelegate {
         itemCount: matchQuery.length,
         itemBuilder: (context, index){
         var resualt = matchQuery[index];
+        debugPrint(resualt);
         return ListTile(
-          title: GetNhanVienInformation(documentId: docIDs[index])
+          title: GetNhanVienInformation(documentId: docIDs[index],)
           // title: Text(resualt)
           );
-        }
+          }
         ); 
       }),
     );
@@ -326,11 +342,13 @@ class GetNhanVienInformation extends StatelessWidget {
   final String documentId;
 
   GetNhanVienInformation({required this.documentId});
+  //  GetNhanVienInformation({Key.key});
 
   @override
   Widget build(BuildContext context) {
     // get the collection
     CollectionReference nhanviens = FirebaseFirestore.instance.collection('AddNhanvien');
+    print('list nhan vien $nhanviens');
     return FutureBuilder<DocumentSnapshot>(
       future: nhanviens.doc(documentId).get(),
       builder:((context, snapshot) {
@@ -344,7 +362,21 @@ class GetNhanVienInformation extends StatelessWidget {
             child: ElevatedButton(
               onPressed: (() {
                 print("doumentId ${documentId}");
-               Navigator.push(context, MaterialPageRoute(builder: (context)=> UserDetail(documentId)));
+                // int id = snapshot.data!['id'];
+                // String name = snapshot.data!['name'];
+                // String desination  = snapshot.data!['desination'];
+                // int numberphone = snapshot.data!['numberphone'];
+                // String workingday = snapshot.data!['workingday'];
+
+               Navigator.push(context, MaterialPageRoute(
+                builder: (context)=> UserDetail(
+                // id : id,
+                // designation : designation,
+                // name:name;
+                // reference:reference;
+                // numberphone:numberphone,
+                // workingday:workingday,
+                documentId)));// a log list nhanviens ra xem no se ra cai id nay
               }),
               style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xffFFFFFF),
