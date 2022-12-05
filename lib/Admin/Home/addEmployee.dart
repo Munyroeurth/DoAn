@@ -410,7 +410,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                             final user = AddNhanVien(
                                               // joiningdate: DateTime.parse(controllerdate.text),
                                               name: controllerName.text,
-                                              numberphone: int.parse(controllerNumberPhone.text),
+                                              numberphone: controllerNumberPhone.text,
                                               designation: controllerDesignation.text, 
                                               workingday: controllerWorkingDay.text, 
                                               gender: controllerGender.text,
@@ -633,7 +633,7 @@ class AddNhanVien {
   // late final DateTime joiningdate;
   String id;
   late final String name;
-  late final int numberphone;
+  late final String numberphone;
   late final String designation;
   late final String workingday;
   late final String gender;

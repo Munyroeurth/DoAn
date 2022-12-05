@@ -13,12 +13,13 @@ class generate extends StatefulWidget {
 }
 
 class _generateState extends State<generate> {
+
   String qrData = "https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/(S(23ljqbc1g2glmncz4ivhpbo3))/StudyRegister/StudyRegister.aspx";
 
   final docDatas = [];
 
   Future DatasQrcode () async{
-    final dataqrcode = await FirebaseFirestore.instance.collection('user').add('qrData' as Map<String, dynamic>);
+    final dataqrcode = await FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
     debugPrint('dataqrcode${dataqrcode}');
   }
 
@@ -84,33 +85,36 @@ class _generateState extends State<generate> {
                               embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(50,50)),
                              ), 
                             const Text('Get Your Data/Link to the QR CODE ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-                            TextField(
-                              autofocus: true,
-                              keyboardType: TextInputType.text,
-                              controller: qrText,
-                              // ignore: prefer_const_constructors
-                              decoration: InputDecoration(
-                                hintText: "Enter the Data/LINK"
+                            Padding(
+                              padding: const EdgeInsets.all(13.0),
+                              child: TextField(
+                                autofocus: true,
+                                keyboardType: TextInputType.text,
+                                controller: qrText,
+                                // ignore: prefer_const_constructors
+                                decoration: InputDecoration(
+                                  hintText: "Enter the Data/LINK"
+                                ),
                               ),
                             ),
-                             TextField(
-                              autofocus: true,
-                              keyboardType: TextInputType.text,
-                              controller: idText,
-                              // ignore: prefer_const_constructors
-                              decoration: InputDecoration(
-                                hintText: "Data Id"
-                              ),
-                            ),
-                             TextField(
-                              autofocus: true,
-                              keyboardType: TextInputType.text,
-                              controller: nameText,
-                              // ignore: prefer_const_constructors
-                              decoration: InputDecoration(
-                                hintText: "Name"
-                              ),
-                            ),
+                            //  TextField(
+                            //   autofocus: true,
+                            //   keyboardType: TextInputType.text,
+                            //   controller: idText,
+                            //   // ignore: prefer_const_constructors
+                            //   decoration: InputDecoration(
+                            //     hintText: "Data Id"
+                            //   ),
+                            // ),
+                            //  TextField(
+                            //   autofocus: true,
+                            //   keyboardType: TextInputType.text,
+                            //   controller: nameText,
+                            //   // ignore: prefer_const_constructors
+                            //   decoration: InputDecoration(
+                            //     hintText: "Name"
+                            //   ),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.only(top: 13),
                               child: SizedBox(
@@ -132,7 +136,7 @@ class _generateState extends State<generate> {
                                         qrData = qrText.text;
                                      });  
                                     }
-                                    print("qrcodeData${qrData}");
+                                    print("qrcodeData: ${qrData}");
                                   },
                                   child: const Text('QENERATE QRCODE'),
                                 ),
@@ -152,6 +156,7 @@ class _generateState extends State<generate> {
     );
   }
   final qrText = TextEditingController();
+
   final idText = TextEditingController();
   final nameText = TextEditingController();
 }

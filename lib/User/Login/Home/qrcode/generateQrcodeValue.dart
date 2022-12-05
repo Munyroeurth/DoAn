@@ -32,7 +32,6 @@ class _BooingQRGenerateState extends State<BooingQRGenerate> {
   var deviceid;
 
   late int dtguid;
-
   late int abid;
   late int txnid;
   late int uid;
@@ -44,7 +43,7 @@ class _BooingQRGenerateState extends State<BooingQRGenerate> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown
     ]);
-    deviceInfo();
+    // deviceInfo();
   }
 
   Future<void> deviceInfo() async {
@@ -75,7 +74,7 @@ class _BooingQRGenerateState extends State<BooingQRGenerate> {
   _contenWidget(){
     final bodyHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom;
     return Container(
-      color: Color(0xFFFFFF),
+      color: const Color(0xFFFFFF),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -114,8 +113,8 @@ class _BooingQRGenerateState extends State<BooingQRGenerate> {
                   version: QrVersions.auto,
                   size: 320,
                   gapless: false,
-                  embeddedImage: AssetImage('Image/Logo.png'),
-                  embeddedImageStyle: QrEmbeddedImageStyle(size: Size(80, 80)),
+                  embeddedImage: const AssetImage('Image/Logo.png'),
+                  embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(80, 80)),
                   ),
               ),
               ),

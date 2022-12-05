@@ -33,7 +33,7 @@ class _EmployeeListState extends State<EmployeeList> {
       },
     ));
   }
-
+// chuyen tham so to man hin 2 
   Future<void> NvigateIDUSer() async {
 
     final responseIdUser = await FirebaseFirestore.instance.collection('AddNhanvienn').get().then(
@@ -212,7 +212,7 @@ class _EmployeeListState extends State<EmployeeList> {
                               return Column(
                               children: [
                                 ListTile(
-                                  title: GetNhanVienInformation(documentId: docIDs[index]),
+                                  title: GetNhanVienInformation(documentId: docIDs[index], resualt: docIDs[index],),
                                 ), 
                               ],
                             );
@@ -284,12 +284,13 @@ class CustomSearch extends SearchDelegate {
   
   @override
   Widget buildResults(BuildContext context) {
+
    List<String> matchQuery = [];
     for(var item in docIDs){
       if(item.toLowerCase().contains(query.toLowerCase())){
         matchQuery.add(item);
-        this.docIDs = docIDs;
-      }else{
+        // this.docIDs = docIDs;
+        print(matchQuery);
         getDocIDs();
       }
     }
@@ -302,7 +303,7 @@ class CustomSearch extends SearchDelegate {
         var resualt = matchQuery[index];
         // var resualtSearch = docIDs[index];
         return ListTile(
-          title: GetNhanVienInformation(documentId: resualt[index])
+          title: GetNhanVienInformation(documentId: resualt[index],resualt:resualt[getDocIDs.hashCode])
           // title: Text(resualt)
           );
         }
@@ -313,10 +314,12 @@ class CustomSearch extends SearchDelegate {
   
   @override
   Widget buildSuggestions(BuildContext context) {
+
     List<String> matchQuery = [];
     for(var item in docIDs){
       if(item.toLowerCase().contains(query.toLowerCase())){
         matchQuery.add(item);
+        getDocIDs();
       }
     }
     return FutureBuilder(
@@ -328,7 +331,7 @@ class CustomSearch extends SearchDelegate {
         var resualt = matchQuery[index];
         debugPrint(resualt);
         return ListTile(
-          title: GetNhanVienInformation(documentId: docIDs[index],)
+          title: GetNhanVienInformation(documentId: docIDs[index], resualt: resualt[index],)
           // title: Text(resualt)
           );
           }
@@ -341,7 +344,8 @@ class CustomSearch extends SearchDelegate {
 class GetNhanVienInformation extends StatelessWidget {
   final String documentId;
 
-  GetNhanVienInformation({required this.documentId});
+  GetNhanVienInformation({required this.documentId, required String resualt});
+  
   //  GetNhanVienInformation({Key.key});
 
   @override
@@ -362,21 +366,8 @@ class GetNhanVienInformation extends StatelessWidget {
             child: ElevatedButton(
               onPressed: (() {
                 print("doumentId ${documentId}");
-                // int id = snapshot.data!['id'];
-                // String name = snapshot.data!['name'];
-                // String desination  = snapshot.data!['desination'];
-                // int numberphone = snapshot.data!['numberphone'];
-                // String workingday = snapshot.data!['workingday'];
-
                Navigator.push(context, MaterialPageRoute(
-                builder: (context)=> UserDetail(
-                // id : id,
-                // designation : designation,
-                // name:name;
-                // reference:reference;
-                // numberphone:numberphone,
-                // workingday:workingday,
-                documentId)));// a log list nhanviens ra xem no se ra cai id nay
+                builder: (context)=> UserDetail(documentId)));// a log list nhanviens ra xem no se ra cai id nay
               }),
               style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xffFFFFFF),

@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -122,14 +123,24 @@ class _AttendRequestState extends State<AttendRequest> {
                                return ListView.builder(
                                 itemCount: data.size,
                                 itemBuilder: ((context, index) {
-                                  return Text('User is: ${data.docs[index]['name']}---Id User is: ${data.docs[index]['id']}');
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        Text('User is: ${data.docs[index]['name']}'),
+                                        // Text('reference is: ${data.docs[index]['reference']}'),
+                                        // Text('Id User is: ${data.docs[index]['id']}'),
+                                      ],
+                                    ),
+                                  );
                                 }));
                              }))
                           ),
                         ),
                         ElevatedButton(
-                        onPressed: (() async {
-                          users;    
+                        onPressed: ((){
+                          users;
+                          print('DATA');
                         }), 
                         child: const Text('GetUser'))
                       ],

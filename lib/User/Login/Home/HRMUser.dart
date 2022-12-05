@@ -787,7 +787,6 @@ _ProfileModal(context,){
                borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(24),
                 bottomRight: Radius.circular(24)
-
               )
             ),
               child: Padding(
