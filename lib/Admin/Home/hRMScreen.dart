@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/employeeManagement.dart';
+import 'package:flutter_application_1/Admin/Login/SignIn/login/auth.dart';
 
-import '../../User/Login/Home/login/auth.dart';
 
 class HRMScreen extends StatefulWidget {
   const HRMScreen({super.key});

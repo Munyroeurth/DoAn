@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Admin/Login/SignIn/login/auth.dart';
 import 'package:flutter_application_1/Admin/Login/SignUp/signUpAdminHR.dart';
 import 'package:flutter_application_1/Admin/Login/ForgetPass.dart';
 import 'package:flutter_application_1/Admin/Login/selectRoleScreen.dart';
-
-import '../../User/Login/Home/login/auth.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});

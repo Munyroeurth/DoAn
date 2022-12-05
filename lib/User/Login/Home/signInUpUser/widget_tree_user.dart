@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/User/Login/Home/HRMUser.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
-import 'package:flutter_application_1/User/Login/Home/signInUpUser/home_page.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/login_register_page.dart';
 
 class WidgetTreeUser extends StatefulWidget {

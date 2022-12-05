@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,8 @@ const BackgrnColor = Color(0xff567DF4);
 
 class _HRMUserScreenState extends State<HRMUserScreen> {
 
+
+
   final nhanvien = FirebaseAuth.instance.currentUser!;
 
   List<String> docIDs = [];
@@ -36,7 +40,9 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
         // print('doIDs ${docIDs}');
       },
     ));
+    
    }
+
   @override 
   void initState(){
     getDocIDs();
@@ -102,7 +108,29 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
         signOut();
         Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpUser()));
       }),
-      child: const Text('Sign Out', style: TextStyle(fontSize: 20),),
+      child: const Text('Sign Out', style: TextStyle(fontSize: 20, fontFamily: 'Manrope'),),
+    ),
+  );
+  }
+  Widget _signOutButton1() {
+  return SizedBox(
+    height: 53,
+    width: 400,
+    child: ElevatedButton(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xff567DF4),
+      // minimumSize: Size(327, 54),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.circular(10))),
+      onPressed: (() async {
+        final data = await FirebaseFirestore.instance.collection("AddNhanvien").where('Iuc3N2RQGofqd7MM7aLv');
+      
+        print('dataId:${data}');
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpUser()));
+      }),
+      child: const Text('dataID', style: TextStyle(fontSize: 20),),
     ),
   );
   }
@@ -545,6 +573,10 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                   padding: const EdgeInsets.only(top: 20),
                                   child: _signOutButton(),
                                 ),
+                                 Padding(
+                                  padding: const EdgeInsets.only(top: 20),
+                                  child: _signOutButton1()),
+                                
                             ],
                           ),
                         ))),

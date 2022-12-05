@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/User/Login/Home/HRMUser.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
 import 'package:flutter_application_1/User/Login/signUpUser.dart';
 import '../../../../Admin/Login/selectRoleScreen.dart';
@@ -36,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<void> createUserWithEmailAndPassword(bool isLogin) async {
+  Future<void> createUserWithEmailAndPassword() async {
     try {
       final response = await Auth().createUserWithEmailAndPassword(
         email: _controllerEmail.text,
@@ -51,14 +50,14 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
   void onpressedFunction(){
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>const HRMUserScreen()));
-    if (isLogin == true) {
-      signInWithEmailAndPassword(isLogin);
-    }else{
-      createUserWithEmailAndPassword(isLogin);
-    }
-    // isLogin ? signInWithEmailAndPassword(isLogin) : createUserWithEmailAndPassword(isLogin);
-    print(signInWithEmailAndPassword(isLogin));
+    // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HRMUserScreen()));
+    // if (isLogin == true) {
+    //   signInWithEmailAndPassword(isLogin);
+    // }else{
+    //   createUserWithEmailAndPassword(isLogin);
+    // }
+    isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
+    
     print("vaoday");
   }
   Widget _name (){
@@ -189,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: const EdgeInsets.only(),
                                   child: IconButton(
                                     onPressed: (() {
-                                      createUserWithEmailAndPassword(isLogin);
+                                      createUserWithEmailAndPassword();
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(

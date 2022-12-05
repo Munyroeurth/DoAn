@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/hRMScreen.dart';
 import 'package:flutter_application_1/Admin/Login/signInScreen.dart';
 import 'package:flutter_application_1/User/Login/Home/HRMUser.dart';
-import 'package:flutter_application_1/User/Login/Home/login/widget_tree_admin.dart';
+import 'package:flutter_application_1/Admin/Login/SignIn/login/widget_tree_admin.dart';
 
 class SignUpHR extends StatefulWidget {
   const SignUpHR({super.key});

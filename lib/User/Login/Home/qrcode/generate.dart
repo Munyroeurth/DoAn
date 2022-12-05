@@ -15,6 +15,7 @@ class generate extends StatefulWidget {
 class _generateState extends State<generate> {
 
   String qrData = "https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/(S(23ljqbc1g2glmncz4ivhpbo3))/StudyRegister/StudyRegister.aspx";
+  
 
   final docDatas = [];
 
