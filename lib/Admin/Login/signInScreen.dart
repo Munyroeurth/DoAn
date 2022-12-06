@@ -91,7 +91,7 @@ Widget _Email (
     return TextField(
       controller: controller,
       autofocus: true,
-        keyboardType: TextInputType.visiblePassword,
+      keyboardType: TextInputType.visiblePassword,
       // keyboardType:,
       obscureText: isVisible,
       onChanged: ((value) {

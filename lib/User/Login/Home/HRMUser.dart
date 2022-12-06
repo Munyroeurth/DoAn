@@ -23,8 +23,6 @@ const BackgrnColor = Color(0xff567DF4);
 
 class _HRMUserScreenState extends State<HRMUserScreen> {
 
-
-
   final nhanvien = FirebaseAuth.instance.currentUser!;
 
   List<String> docIDs = [];
@@ -34,6 +32,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
       (QuerySnapshot snapshot) => snapshot.docs.forEach(
         (DocumentSnapshot doc){
         print(doc.data);
+        
         // print(doc.documentID);
         // print(document.reference);
         // docIDs.add(document.reference.id);
@@ -45,6 +44,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
 
   @override 
   void initState(){
+    print("User ${nhanvien.uid}");
     getDocIDs();
     super.initState();
   }

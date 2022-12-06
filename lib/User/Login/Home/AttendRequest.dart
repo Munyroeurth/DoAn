@@ -25,6 +25,8 @@ class _AttendRequestState extends State<AttendRequest> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,6 +143,7 @@ class _AttendRequestState extends State<AttendRequest> {
                         onPressed: ((){
                           users;
                           print('DATA');
+                          debugPrint('users${users}');
                         }), 
                         child: const Text('GetUser'))
                       ],
@@ -154,4 +157,11 @@ class _AttendRequestState extends State<AttendRequest> {
       ),
     );
   }
+}
+
+class UserManagerment {
+  storeNewUser(user, context) {
+    // var
+  }
+
 }

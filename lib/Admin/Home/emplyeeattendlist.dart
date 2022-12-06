@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +16,9 @@ class EmployeeAttenList extends StatefulWidget {
 }
 
 class _EmployeeAttenListState extends State<EmployeeAttenList> {
-    final TextEditingController _date = TextEditingController();
+  
 
+  final TextEditingController _date = TextEditingController();
 
   Widget _Date(){
     return SizedBox(
@@ -87,7 +90,7 @@ class _EmployeeAttenListState extends State<EmployeeAttenList> {
         docIDS.add(element.reference.id);
     }));
   }
-
+ 
   
   Widget _persion1(){
   return FutureBuilder(
@@ -256,6 +259,17 @@ class GetNhanvien extends StatelessWidget {
   final String document;
 
   const GetNhanvien({required this.document});
+
+  //  Widget _containColor(){
+  //   RandomColor _randomColor = RandomColor();
+  //   Color _color = _randomColor.randomColor(
+  //     colorBrightness:ColorBrightness.light
+  //   );
+  //   return CircleAvatar(
+  //         // backgroundColor:  _randomColor,
+  //         child: Text('${data['id']??''}'),),
+  // }
+
   @override
   Widget build(BuildContext context) {
     CollectionReference nhanvien = FirebaseFirestore.instance.collection('AddNhanvien');
@@ -283,7 +297,10 @@ class GetNhanvien extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(child: Text('${data['id']??''}'),),
+                      
+                      CircleAvatar(
+                        // backgroundColor:  _randomColor,
+                        child: Text('${data['id']??''}'),),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(

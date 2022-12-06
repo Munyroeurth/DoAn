@@ -14,6 +14,10 @@ class LoginPage extends StatefulWidget {
 }
 const BackgrnColor = Color(0xff567DF4);
 class _LoginPageState extends State<LoginPage> {
+  bool isVisible = true;
+  bool isToggle = true;
+   final String Password = '';
+
   String? errorMessage = '';
   bool isLogin = true;
 
@@ -21,12 +25,12 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerId = TextEditingController();
 
-  Future<void> signInWithEmailAndPassword(bool isLogin) async {
+  Future<void> signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
-        employeeId:_controllerId.text,
+        // employeeId:_controllerId.text,
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -40,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
       final response = await Auth().createUserWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
-        employeeId:_controllerId.text,
+        // employeeId:_controllerId.text,
       );
       // print('createUserResult ${response}');
     } on FirebaseAuthException catch (e) {
@@ -49,17 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
   }
-  void onpressedFunction(){
-    // Navigator.push(context, MaterialPageRoute(builder: (context)=>const HRMUserScreen()));
-    // if (isLogin == true) {
-    //   signInWithEmailAndPassword(isLogin);
-    // }else{
-    //   createUserWithEmailAndPassword(isLogin);
-    // }
-    isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
-    
-    print("vaoday");
-  }
+ 
   Widget _name (){
   return TextField(
   // controller:controllerName,
@@ -93,6 +87,56 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+  /******************Box EMail************************************** */
+  Widget _Email (
+   String titte,
+   TextEditingController controller,
+  ){
+    return TextField(
+    controller: controller,
+    decoration: InputDecoration(
+        hintText: 'admin@gmail.com',
+        labelText: 'Email',
+        border: OutlineInputBorder(
+            borderRadius:
+                BorderRadius.circular(10))),
+    );
+  } 
+  //******************Box Pass************************* */
+  Widget _Password(
+     String titte,
+   TextEditingController controller,
+  ){
+    return TextField(
+      controller: controller,
+      autofocus: true,
+        keyboardType: TextInputType.visiblePassword,
+      // keyboardType:,
+      obscureText: isVisible,
+      onChanged: ((value) {
+        setState(() {
+          // Password = value;
+        });
+      }),
+      decoration: InputDecoration(
+          hintText: 'PassWord',
+          labelText: 'PassWord',
+          suffixIcon: IconButton(
+
+              onPressed: () {
+                setState(() {
+                  isVisible = !isVisible;
+                });
+              },
+              icon: isVisible == true
+                  ? const Icon(Icons.visibility_off)
+                  : const Icon(Icons.visibility)),
+          border: OutlineInputBorder(
+              borderRadius:
+                  BorderRadius.circular(10))),
+    );
+  }
+  /*****************************Box ID*****************/
   Widget _Id (
     String id,
     TextEditingController controller){
@@ -144,8 +188,9 @@ class _LoginPageState extends State<LoginPage> {
       height: 53,
       width: 500,
       child: ElevatedButton(
-           onPressed: onpressedFunction,
-        // onPressed: isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
+          //  onPressed: onpressedFunction,
+        onPressed: 
+        isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xff567DF4),
             elevation: 0,
@@ -255,18 +300,12 @@ class _LoginPageState extends State<LoginPage> {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        _Id('employeeId',_controllerId),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: _Id('employeeId',_controllerId),
+                          padding: const EdgeInsets.only(top:20, bottom: 20),
+                          child: _Email('Emails', _controllerEmail),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: _entryField('Email', _controllerEmail),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top:20),
-                          child: _entryField('Password', _controllerPassword),
-                        ),
+                        _Password('Password', _controllerPassword),
                         // GestureDetector(
                         //   onTap: (() async  {
                         //     String id = _controllerId.toString();
@@ -304,8 +343,6 @@ class _LoginPageState extends State<LoginPage> {
                            child: _fogetpass(),
                          ),
                         _submitButton(),
-                       
-                        // _loginOrRegisterButton(),
                          Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/Admin/Home/eddSuc.dart';
 import 'package:flutter_application_1/Admin/Home/emptyEmployee.dart';
 import 'package:intl/intl.dart';
@@ -12,12 +13,23 @@ class AddEmployee extends StatefulWidget {
 }
 
 class _AddEmployeeState extends State<AddEmployee> {
+  bool isVisible = true;
+  bool isToggle = true;
+  final String Password = '';
+
+ Future postemailpassData() async{
+   final result = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: controllerEmail.text,
+    password:controllerPass.text);
+ }
 
   final databaseReference  = FirebaseFirestore.instance;
 
   final controllerdate = TextEditingController();
   final controllerId = TextEditingController();
   final controllerName = TextEditingController();
+  final controllerEmail = TextEditingController();
+  final controllerPass = TextEditingController();
   final controllerNumberPhone = TextEditingController();
   final controllerDesignation = TextEditingController();
   final controllerWorkingDay = TextEditingController();
@@ -237,6 +249,43 @@ class _AddEmployeeState extends State<AddEmployee> {
                                                   BorderRadius.circular(10))),
                                     ),
                                   ),
+                                   /********************Password********** */
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 26),
+                                    child: TextField(
+                                      controller: controllerEmail,
+                                      decoration: InputDecoration(
+                                          hintText: 'Email@gmail.com',
+                                          labelText: 'Email',
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10))),
+                                    ),
+                                  ),
+                                  /*****Email*************** */
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 26),
+                                    child: TextField(
+                                      controller: controllerPass,
+                                      obscureText: isVisible,
+                                      decoration: InputDecoration(
+                                          hintText: 'Password',
+                                          labelText: 'Password',
+                                          suffixIcon: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                isVisible = !isVisible;
+                                              });
+                                            },
+                                            icon: isVisible == true
+                                                ? const Icon(Icons.visibility_off)
+                                                : const Icon(Icons.visibility)),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10))),
+                                    ),
+                                  ),
+                                 
                                   /******Designation*****/
                                   Padding(
                                     padding: const EdgeInsets.only(top: 24),
@@ -411,11 +460,14 @@ class _AddEmployeeState extends State<AddEmployee> {
                                               // joiningdate: DateTime.parse(controllerdate.text),
                                               name: controllerName.text,
                                               numberphone: controllerNumberPhone.text,
+                                              email: controllerEmail.text,
+                                              pass: controllerPass.text,
                                               designation: controllerDesignation.text, 
                                               workingday: controllerWorkingDay.text, 
                                               gender: controllerGender.text,
                                               reference: controllerReference.text);
                                               createNhanvienUser(user);
+                                              postemailpassData();
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -634,6 +686,8 @@ class AddNhanVien {
   String id;
   late final String name;
   late final String numberphone;
+  late final String email;
+  late final String pass;
   late final String designation;
   late final String workingday;
   late final String gender;
@@ -643,6 +697,8 @@ class AddNhanVien {
     this.id = '',
     required this.name,
     required this.numberphone,
+    required this.email,
+    required this.pass,
     required this.designation,
     required this.workingday,
     required this.gender,
@@ -654,6 +710,8 @@ class AddNhanVien {
     'id':id,
     'name':name,
     'numberphone':numberphone,
+    'email':email,
+    'password':pass,
     'designation':designation,
     'workingday':workingday,
     'gender':gender,

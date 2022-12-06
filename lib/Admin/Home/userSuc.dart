@@ -28,13 +28,23 @@ class _UserDetailState extends State<UserDetail> {
     }));
   }
 
-  Future DeleteData(int id) async {
-    final deletData = await FirebaseFirestore.instance.collection('AddNhanvien').doc(id as String?);
-   
+  deleteData() async {
+    // final deletData = await FirebaseFirestore.instance.collection('AddNhanvien').doc(id as String?);
+    DocumentReference documentReference = await FirebaseFirestore.instance.collection("AddNhanvien").doc(name);
+    documentReference.delete();
   }
+  var name, email;
 
-  Future<void> Edit(int id) async {
-    final editData = await FirebaseFirestore.instance.collection('AddNhanvien').doc(id as String?);
+  edit() async {
+    // final editData = await FirebaseFirestore.instance.collection('AddNhanvien').doc(id as String?);
+    DocumentReference documentReference = await FirebaseFirestore.instance.collection("AddNhanvien").doc(name);
+    documentReference.update(
+      {
+        'Name': name,
+        'Email': email,
+      } 
+    );
+
   }
 
   @override 
@@ -53,7 +63,7 @@ class _UserDetailState extends State<UserDetail> {
               future: getDocIDs(),
               builder: ((context, snapshot) {
                 return ListView.builder(
-                  itemCount: 8, // docID.lengh
+                  itemCount: docIDs.length, // docID.lengh
                   itemBuilder: ((context, index) {
                     return Stack(
                   children:[ 
@@ -298,7 +308,7 @@ class GetUserInformation extends StatelessWidget {
                               onPressed: (() async {
                                 final deletUser = await FirebaseFirestore.instance
                                 .collection('AddNhanvien')
-                                .doc('yvA6B8Lywrga8JUBT9wl');
+                                .doc('wfhlEMdj0VPplhipYZNW');
                                 deletUser.delete();
                                 print(deletUser);
                               }),
@@ -320,18 +330,18 @@ class GetUserInformation extends StatelessWidget {
                                     .doc('wfhlEMdj0VPplhipYZNW');
                                     // Update specific field
                                     docUser.update({
-                                      'id' : 'null',
-                                      'Name' : 'null',
-                                      'NumberPhone' : 'null',
-                                      'Designation' : 'null',
-                                      'Workingday' : 'null',
-                                      'Gender' : 'Male',
-                                      'Reference': 'null',
-                                      'wfhlEMdj0VPplhipYZNW' : FieldValue.delete(),// delete some parameter
-                                    });
-                                    // docUser.set({
-                                    //   'reference' : 'James'
-                                    // });
+                                      'id' : 'M9',
+                                      'name' : 'Deny Hati',
+                                      'numberPhone' : '0939298220',
+                                      'designation' : 'Mobile Dev',
+                                      'workingday' : 'Tuesday-Saturday',
+                                      'gender' : 'Male',
+                                      'email':'deny@gmail.com',
+                                      'password':'deny009',
+                                      'reference': 'Anh Long',
+                                      // 'wfhlEMdj0VPplhipYZNW' : FieldValue.delete(),// delete some parameter
+                                    }).then((value) => print("Data Added successfully"));
+                                   
                                 }),
                                 child:const Text('Edit', style: TextStyle(color: Color(0xff22215B), fontFamily: 'Manrope', fontSize: 14,fontWeight: FontWeight.bold),)),
                             ),
