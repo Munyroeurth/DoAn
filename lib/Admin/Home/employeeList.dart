@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore_odm/cloud_firestore_odm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_application_1/Admin/Home/eddSuc.dart';
 import 'package:flutter_application_1/Admin/Home/UserSuc.dart';
-import 'package:get/get.dart';
 
 class EmployeeList extends StatefulWidget {
   const EmployeeList({super.key});
@@ -18,6 +15,11 @@ class EmployeeList extends StatefulWidget {
 class _EmployeeListState extends State<EmployeeList> {
 
   final user = FirebaseAuth.instance.currentUser!;
+
+  // late final RandomColor _randomColor = RandomColor();
+  // late final Color _color = _randomColor.randomColor(
+  //   colorSaturation: ColorSaturation.highSaturation
+  // );
 
   //document IDs
   List<String> docIDs = [];
@@ -379,7 +381,9 @@ class GetNhanVienInformation extends StatelessWidget {
                 children: [
                Row(
                 children: [
-                   CircleAvatar(child: Text('${data['id']??''}'),) ,
+                   CircleAvatar(
+                    // backgroundColor: _radomColor,
+                    child: Text('${data['designation']??''}'),) ,
                 Padding(
                   padding: const EdgeInsets.only(left: 5),
                   child: Padding(

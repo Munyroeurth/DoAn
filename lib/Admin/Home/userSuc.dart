@@ -121,7 +121,7 @@ class GetUserInformation extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                CircleAvatar(child: Text('${data['id']}', style: const TextStyle(color: Color(0xffFFFFFF), fontFamily: 'Manrope', fontSize: 20),),),
+                                CircleAvatar(child: Text('${data['designation']}', style: const TextStyle(color: Color(0xffFFFFFF), fontFamily: 'Manrope', fontSize: 20),),),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
@@ -308,7 +308,7 @@ class GetUserInformation extends StatelessWidget {
                               onPressed: (() async {
                                 final deletUser = await FirebaseFirestore.instance
                                 .collection('AddNhanvien')
-                                .doc('wfhlEMdj0VPplhipYZNW');
+                                .doc('3ltdrnDulGP4MOpdmTZk');
                                 deletUser.delete();
                                 print(deletUser);
                               }),

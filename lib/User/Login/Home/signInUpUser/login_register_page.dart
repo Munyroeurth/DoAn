@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
@@ -13,6 +12,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 const BackgrnColor = Color(0xff567DF4);
+
 class _LoginPageState extends State<LoginPage> {
   bool isVisible = true;
   bool isToggle = true;
@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _controllerPassword = TextEditingController();
   final TextEditingController _controllerId = TextEditingController();
 
-  Future<void> signInWithEmailAndPassword() async {
+  Future<void>  signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
         email: _controllerEmail.text,
@@ -41,12 +41,12 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> createUserWithEmailAndPassword() async {
     try {
-      final response = await Auth().createUserWithEmailAndPassword(
+        await Auth().createUserWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
         // employeeId:_controllerId.text,
       );
-      // print('createUserResult ${response}');
+     
     } on FirebaseAuthException catch (e) {
       setState((){
         errorMessage = e.message;
@@ -54,24 +54,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
  
-  Widget _name (){
-  return TextField(
-  // controller:controllerName,
-  // keyboardType: TextInputType.name,
-  // obscureText: true,
-  onChanged: ((value) {
-    setState(() {
-      // Password = value;
-    });
-  }),
-  decoration: InputDecoration(
-      hintText: 'Deny Brown',
-      labelText: 'Employee Name',
-      border: OutlineInputBorder(
-          borderRadius:
-              BorderRadius.circular(10))),
-  );
-  }
 
   Widget _entryField(
     String title,
@@ -189,8 +171,12 @@ class _LoginPageState extends State<LoginPage> {
       width: 500,
       child: ElevatedButton(
           //  onPressed: onpressedFunction,
-        onPressed: 
+        onPressed:
         isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
+        // (() {
+        //   getDataIDs;
+        //   isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
+        // }),
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xff567DF4),
             elevation: 0,
@@ -343,6 +329,7 @@ class _LoginPageState extends State<LoginPage> {
                            child: _fogetpass(),
                          ),
                         _submitButton(),
+                        
                          Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+// import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +24,12 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
 
   final nhanvien = FirebaseAuth.instance.currentUser!;
 
+  // Future readData() async {
+  //  final docsUsers = FirebaseFirestore.instance.collection('AddNhanvien');
+  //  final snapshot = await docsUsers.get();
+   
+  // }
+
   List<String> docIDs = [];
    // Get docIDs
    Future getDocIDs () async {
@@ -32,6 +37,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
       (QuerySnapshot snapshot) => snapshot.docs.forEach(
         (DocumentSnapshot doc){
         print(doc.data);
+        print(getDocIDs());
         
         // print(doc.documentID);
         // print(document.reference);
@@ -44,8 +50,9 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
 
   @override 
   void initState(){
-    print("User ${nhanvien.uid}");
-    getDocIDs();
+    // print("User ${nhanvien.uid}");
+    // print("User ${nhanvien.email}");
+    // getDocIDs();
     super.initState();
   }
   //  PlatformFile? pickedFiles;
@@ -77,6 +84,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
   //  }
 
   final User? user = Auth().currentUser;
+  // final postData = FirebaseFirestore.instance.collection('AddNhanvien').get();
 
   Future<void> signOut() async {
     await Auth().signOut();
@@ -89,7 +97,13 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
   bool notification = true;
 
   Widget _userNam() {
-    return Text(user?.email ?? 'User Email', style: const TextStyle(fontSize: 14),);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(user?.email ?? 'User Email', style: const TextStyle(fontSize: 14),),
+          
+      ],
+    );
   }
 
   Widget _signOutButton() {
@@ -108,7 +122,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
         signOut();
         Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpUser()));
       }),
-      child: const Text('Sign Out', style: TextStyle(fontSize: 20, fontFamily: 'Manrope'),),
+      child: const Text('Sign Out', style: TextStyle(fontSize: 20, fontFamily: 'Manrope', fontWeight: FontWeight.bold),),
     ),
   );
   }
@@ -124,10 +138,8 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
       shape: RoundedRectangleBorder(
           borderRadius:
               BorderRadius.circular(10))),
-      onPressed: (() async {
-        final data = await FirebaseFirestore.instance.collection("AddNhanvien").where('Iuc3N2RQGofqd7MM7aLv');
-      
-        print('dataId:${data}');
+      onPressed: (() {
+        // readData();
         // Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpUser()));
       }),
       child: const Text('dataID', style: TextStyle(fontSize: 20),),
@@ -286,7 +298,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                            const PostDio()));
+                                                                             PostDio()));
                                                           }),
                                                           child: const Image(
                                                               image: AssetImage(
@@ -823,34 +835,32 @@ _ProfileModal(context,){
             ),
               child: Padding(
                 padding:  const EdgeInsets.only(top: 10),
-                child: Expanded(
-                  child: Column(
-                    children: const [
-                    // if(pickedFiles !=null)
-                       SizedBox(
-                      height: 100,
-                      width: 100,
-                       child: CircleAvatar(
-                       backgroundColor: Color.fromARGB(255, 55, 59, 57),
-                       radius: 100,
-                       backgroundImage: AssetImage('Image/profile.png'),
-                       // backgroundImage: AssetImage('pickedFile!.name'),
-                       // child: Image.file(
-                       //   File(pickedFiles?.path),
-                       //   width: double.infinity,
-                       //   fit: BoxFit.cover,
-                       // ),
-                      ),
-                      ),//CircleA ,)
-                      Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text('Nguyễn Anh Tuấn'),
-                      ),
-                      // const ElevatedButton(onPressed: null, child: Text('Select file')),
-                      // ElevatedButton(onPressed: UploadFile, child: const Text('Upload file')),
-                      // buildProgress(),
-                    ],
-                  ),
+                child: Column(
+                  children: const [
+                  // if(pickedFiles !=null)
+                     SizedBox(
+                    height: 100,
+                    width: 100,
+                     child: CircleAvatar(
+                     backgroundColor: Color.fromARGB(255, 55, 59, 57),
+                     radius: 100,
+                     backgroundImage: AssetImage('Image/profile.png'),
+                     // backgroundImage: AssetImage('pickedFile!.name'),
+                     // child: Image.file(
+                     //   File(pickedFiles?.path),
+                     //   width: double.infinity,
+                     //   fit: BoxFit.cover,
+                     // ),
+                    ),
+                    ),//CircleA ,)
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text('Nguyễn Anh Tuấn'),
+                    ),
+                    // const ElevatedButton(onPressed: null, child: Text('Select file')),
+                    // ElevatedButton(onPressed: UploadFile, child: const Text('Upload file')),
+                    // buildProgress(),
+                  ],
                 ),
               ),
             ))
@@ -890,23 +900,23 @@ _ProfileModal(context,){
 //   }));
 
 
-class ProfileNV extends StatelessWidget {
-  final String profileId;
-   ProfileNV({required this.profileId});
+// class ProfileNV extends StatelessWidget {
+//   final String profileId;
+//    ProfileNV({required this.profileId});
 
-  @override
-  Widget build(BuildContext context) {
-    CollectionReference profile = FirebaseFirestore.instance.collection('AddNhanvien');
-    return FutureBuilder<DocumentSnapshot>(
-      builder: ((context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data!.data() as Map<String,dynamic>;
+//   @override
+//   Widget build(BuildContext context) {
+//     CollectionReference profile = FirebaseFirestore.instance.collection('AddNhanvien');
+//     return FutureBuilder<DocumentSnapshot>(
+//       builder: ((context, snapshot) {
+//         if (snapshot.connectionState == ConnectionState.done) {
+//           Map<String, dynamic> data = snapshot.data!.data() as Map<String,dynamic>;
           
-        }
-        return const Text('loading........');
-      })
-      );
-  }
-}
+//         }
+//         return const Text('loading........');
+//       })
+//       );
+//   }
+// }
 
 

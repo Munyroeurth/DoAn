@@ -468,6 +468,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                                               reference: controllerReference.text);
                                               createNhanvienUser(user);
                                               postemailpassData();
+                                              print('user${user}');
                                             Navigator.push(
                                                 context,
                                                 MaterialPageRoute(

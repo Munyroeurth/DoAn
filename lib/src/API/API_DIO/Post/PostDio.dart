@@ -1,13 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/API/API_DIO/Get/Dio_button.dart';
+import 'package:flutter_application_1/src/API/API_DIO/Get/manget.dart';
 import 'package:http/http.dart' as http;
+
+
 class PostDio extends StatefulWidget {
-  const PostDio({super.key});
+  PostDio({super.key});
 
   @override
   State<PostDio> createState() => _PostDioState();
 }
- DioPostData() async {
+
+class _PostDioState extends State<PostDio> {
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _designation = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(50.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 53,
+                      width: 253,
+                      child: TextField(
+                        controller: _name,
+                        decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Name'
+                       ),
+                                    
+                      ),
+                    ),
+                     Padding(
+                       padding: const EdgeInsets.only(top: 10),
+                       child: SizedBox(
+                        height: 53,
+                        width: 253,
+                        child: TextField(
+                          controller: _designation,
+                          decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Designation'
+                         ),
+                                      
+                        ),
+                        ),
+                     ),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 53,
+                        width: 253,
+                        child: ElevatedButton(
+                          onPressed: ((){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ManGet(name: _name.text, designation: _designation.text,)));
+                            DioPostData;
+                          }), 
+                          child: Text('Pass ID')),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 53,
+                        width: 253,
+                        child: ElevatedButton(
+                          onPressed: ((){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>DioButton()));
+                            DioPostData;
+                          }), 
+                          child: Text('Post Button')),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+  DioPostData() async {
   //200 success 400 404 500
   // var dio = Dio();
   try{
@@ -18,46 +100,6 @@ class PostDio extends StatefulWidget {
     print(e);
   }
 }
-class _PostDioState extends State<PostDio> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(50),
-              child: ElevatedButton(
-                onPressed: ((){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const DioButton()));
-                  DioPostData;
-                }), 
-                child: Text('Post Button')),
-            ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: ListView(
-              //     children: [
-              //       Text($DioPostData)
-              //     ],
-              //   ),
-              // )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-
-
-
-
-
-
-
-
 // class DioPost {
 //   late final int postId;
 //   late final int id;

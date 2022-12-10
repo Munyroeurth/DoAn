@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +18,11 @@ class _EmployeeAttenListState extends State<EmployeeAttenList> {
   
 
   final TextEditingController _date = TextEditingController();
+
+  // late final RandomColor _randomColor = RandomColor();
+  // late final Color _color = _randomColor.randomColor(
+  //   colorSaturation: ColorSaturation.highSaturation
+  // );
 
   Widget _Date(){
     return SizedBox(
@@ -297,10 +301,9 @@ class GetNhanvien extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      
                       CircleAvatar(
                         // backgroundColor:  _randomColor,
-                        child: Text('${data['id']??''}'),),
+                        child: Text('${data['designation']??''}'),),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(

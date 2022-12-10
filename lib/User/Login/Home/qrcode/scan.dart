@@ -110,7 +110,7 @@ Future PostData() async {
                             height: 200,
                             width: 200,
                             decoration:  BoxDecoration(
-                              boxShadow:[ BoxShadow(color: Color.fromARGB(255, 23, 8, 8).withOpacity(0.5),
+                              boxShadow:[ BoxShadow(color: Color.fromARGB(255, 196, 216, 244).withOpacity(0.5),
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset: const Offset(0,2))],
@@ -118,12 +118,12 @@ Future PostData() async {
                             borderRadius:BorderRadius.circular(10)),
                             child: Column(
                               children: [
-                              TextFormField(
-                                controller: controllerqrcodeData,
-                                decoration: const InputDecoration(
-                                  hintText: "qrcodeResult"
-                                ),
-                              ),
+                              // TextFormField(
+                              //   controller: controllerqrcodeData,
+                              //   decoration: const InputDecoration(
+                              //     hintText: "qrcodeResult"
+                              //   ),
+                              // ),
                               Padding(
                               padding: const EdgeInsets.only(top: 50, right: 10, left: 10),
                               child: Text(qrcodeResult,

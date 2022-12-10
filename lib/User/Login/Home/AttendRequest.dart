@@ -140,10 +140,21 @@ class _AttendRequestState extends State<AttendRequest> {
                           ),
                         ),
                         ElevatedButton(
-                        onPressed: ((){
-                          users;
-                          print('DATA');
-                          debugPrint('users${users}');
+                        onPressed: (() async {
+
+                          final res = await FirebaseFirestore.instance
+                          .collection('AddNhanvien')
+                          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+                          .get()
+                          .then((value) {
+                            value.docs.forEach((element) {
+                              print(element.id);
+                            });
+                          });
+                          print(res);
+                          // users;
+                          // print('DATA');
+                          // debugPrint('users${users}');
                         }), 
                         child: const Text('GetUser'))
                       ],
