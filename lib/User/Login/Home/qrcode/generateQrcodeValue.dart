@@ -134,7 +134,7 @@ class AndroidDeviceInfo {
 
 void deviceInfo() {
 }
-
+ final docId =[];//// k có cho commit file len 
 // Payload payloadFromJson(String str) => Payload.fromJson(json.decode(str));
 // String payloadToJson(Payload data) => Json.encode(data.toJson());
 

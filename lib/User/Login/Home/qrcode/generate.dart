@@ -18,6 +18,7 @@ class _generateState extends State<generate> {
   
 
   final docDatas = [];
+  final docId =[];//// k có cho commit file len 
 
   Future DatasQrcode () async{
     final dataqrcode = await FirebaseFirestore.instance.collection('AddNhanvien').snapshots();

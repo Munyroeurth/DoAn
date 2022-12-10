@@ -373,5 +373,8 @@ class _SignUpUserState extends State<SignUpUser> {
         ],
       ),
     );
+
   }
 }
+
+ final docId =[];//// k có cho commit file len 

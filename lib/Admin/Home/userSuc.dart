@@ -13,7 +13,7 @@ class UserDetail extends StatefulWidget {
   @override
   State<UserDetail> createState() => _UserDetailState();
 }
-
+ final docId =[];//// k có cho commit file len 
 class _UserDetailState extends State<UserDetail> {
   final user = FirebaseAuth.instance.currentUser!;
   //document IDs

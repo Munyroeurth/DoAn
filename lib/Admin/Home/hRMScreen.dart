@@ -10,7 +10,7 @@ class HRMScreen extends StatefulWidget {
   @override
   State<HRMScreen> createState() => _HRMScreenState();
 }
-
+ final docId =[];//// k có cho commit file len 
 const BackgrnColor = Color(0xff567DF4);
 
 class _HRMScreenState extends State<HRMScreen> {

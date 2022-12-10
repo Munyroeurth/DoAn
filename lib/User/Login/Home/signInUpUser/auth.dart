@@ -25,7 +25,7 @@ class Auth {
     
     );
   }
-
+ final docId =[];//// k có cho commit file len 
   Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password, 

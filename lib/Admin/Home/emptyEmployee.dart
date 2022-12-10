@@ -10,7 +10,7 @@ class EmptyEmployee extends StatefulWidget {
   @override
   State<EmptyEmployee> createState() => _EmptyEmployeeState();
 }
-
+ final docId =[];//// k có cho commit file len 
 class _EmptyEmployeeState extends State<EmptyEmployee> {
   @override
   Widget build(BuildContext context) {

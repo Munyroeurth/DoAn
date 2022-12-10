@@ -138,6 +138,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
       ),
     );
   }
+   final docId =[];//// k có cho commit file len 
 
   /*****Xay Dung ham Sceen Code********/
 void ScanQRCode() async {
