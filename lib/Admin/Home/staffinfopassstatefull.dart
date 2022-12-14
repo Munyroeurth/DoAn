@@ -95,21 +95,7 @@ class _PassDataState extends State<PassData> {
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)
                   )),
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: users,
-                    builder: ((context, snapshot){
-                      if(snapshot.hasError){
-                      return const Text('Something went Wrong.');
-                      }
-                      if(snapshot.connectionState == ConnectionState.waiting){
-                      return const Text('Laoding.....');
-                      }
-                      final data = snapshot.requireData;
-                      return ListView.builder(
-                      // itemCount: data.size,
-                      itemCount: 1,
-                      itemBuilder: ((context, index) {
-                        return Padding(
+                  child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
@@ -262,13 +248,13 @@ class _PassDataState extends State<PassData> {
                                   ),
                                     onPressed: (() {
                                       Navigator.push(context, MaterialPageRoute(builder: (context)=> EditInforNV(
-                                        designation:data.docs[index]['designation'],
-                                        email: data.docs[index]['email'],
-                                        id: data.docs[index]['id'],
-                                        name:data.docs[index]['name'],
-                                        pass: data.docs[index]['password'],
-                                        reference: data.docs[index]['reference'],
-                                        workingday: data.docs[index]['workingday'],
+                                        designation:widget.designation,
+                                        email: widget.email,
+                                        id: widget.id,
+                                        name:widget.name,
+                                        // pass: widget.,
+                                        reference: widget.reference,
+                                        workingday: widget.workingday,
                                       )));
                                       //  final docUser = FirebaseFirestore.instance
                                       //   .collection('AddNhanvien')
@@ -294,10 +280,7 @@ class _PassDataState extends State<PassData> {
                           ),
                         ),
                        ],
-                      ));
-                    }));
-                    }
-                  ))
+                      )),
                 )
               )
             ]
@@ -306,4 +289,5 @@ class _PassDataState extends State<PassData> {
       ),
     );
   }
+
 }

@@ -8,7 +8,7 @@ class EditInforNV extends StatefulWidget {
   String id;
   String email;
   String reference;
-  String pass;
+  // String pass;
   String workingday;
 
    EditInforNV({
@@ -16,7 +16,7 @@ class EditInforNV extends StatefulWidget {
     required this.designation,
     required this.id,
     required this.email,
-    required this.pass,
+    // required this.pass,
     required this.reference,
     required this.workingday,
     super.key});
@@ -119,7 +119,7 @@ class _EditInforNVState extends State<EditInforNV> {
                                   
                                   Text(widget.email),
                                   Text(widget.id),
-                                  Text(widget.pass),
+                                  // Text(widget.pass),
                                   
                                 ],
                               )

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/Admin/Home/eddSuc.dart';
 import 'package:flutter_application_1/Admin/Home/emptyEmployee.dart';
+import 'package:flutter_application_1/Admin/Login/SignIn/login/auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -675,10 +676,13 @@ _showModalGender(context){
 }
 
 Future createNhanvienUser(AddNhanVien user) async {
+  final userId = await Auth().createUserWithEmailAndPassword(email: user.email, password: user.pass);
   final docUser = FirebaseFirestore.instance.collection('AddNhanvien').doc();
-  user.id = docUser.id;
-  final json = user.toJson();
-  await docUser.set(json);
+  if(userId != null) {
+    user.id = userId ;
+    final json = user.toJson();
+    await docUser.set(json);
+  }
 
 }
 //Make class for nhan vien

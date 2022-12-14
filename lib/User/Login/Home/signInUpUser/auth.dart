@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   User? get currentUser => _firebaseAuth.currentUser;
 
@@ -13,28 +16,43 @@ class Auth {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
-  Future<void> signInWithEmailAndPassword({
+  Future<AddNhanVien?> signInWithEmailAndPassword({
     required String email,
     required String password, 
     // required String employeeId,
     
   }) async {
-    await _firebaseAuth.signInWithEmailAndPassword(
+    UserCredential user = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
       password: password,
     
     );
+    var userJson = {};
+    await _firestore.collection('AddNhanvien').where('id', isEqualTo: user.user?.uid).get().then((value) {
+      userJson = value.docs.first.data();
+    });
+    return AddNhanVien(
+      name: userJson["name"], 
+      numberphone: userJson['numberphone'],
+      email: userJson['email'],
+      pass: userJson['password'],
+      designation:userJson['designation'],
+      workingday: userJson['workingday'], 
+      gender: userJson['gender'],
+      reference: userJson['reference']);
+    
   }
  final docId =[];//// k có cho commit file len 
-  Future<void> createUserWithEmailAndPassword({
+  Future<String?> createUserWithEmailAndPassword({
     required String email,
     required String password, 
     // required String employeeId,
   }) async {
-    await _firebaseAuth.createUserWithEmailAndPassword(
+    UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+    return user.user?.uid;
   }
 
   Future<void> signOut() async {

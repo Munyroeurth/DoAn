@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
 import 'package:flutter_application_1/User/Login/signUpUser.dart';
 import '../../../../Admin/Login/selectRoleScreen.dart';
@@ -15,11 +16,10 @@ const BackgrnColor = Color(0xff567DF4);
 
 class _LoginPageState extends State<LoginPage> {
   bool isVisible = true;
-  bool isToggle = true;
+
    final String Password = '';
 
   String? errorMessage = '';
-  bool isLogin = true;
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
@@ -27,11 +27,12 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void>  signInWithEmailAndPassword() async {
     try {
-      await Auth().signInWithEmailAndPassword(
+      AddNhanVien? user = await Auth().signInWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
         // employeeId:_controllerId.text,
       );
+      print(user?.name);
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -172,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
       child: ElevatedButton(
           //  onPressed: onpressedFunction,
         onPressed:
-        isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
         // (() {
         //   getDataIDs;
         //   isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
