@@ -5,25 +5,22 @@ import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_application_1/Admin/Home/eddSuc.dart';
 import 'package:flutter_application_1/Admin/Home/UserSuc.dart';
 
+import 'staffinfopassstatefull.dart';
+
 class EmployeeList extends StatefulWidget {
   const EmployeeList({super.key});
 
   @override
   State<EmployeeList> createState() => _EmployeeListState();
 }
- final docId =[];//// k có cho commit file len 
+
 class _EmployeeListState extends State<EmployeeList> {
 
+  final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
+
   final user = FirebaseAuth.instance.currentUser!;
-
-  // late final RandomColor _randomColor = RandomColor();
-  // late final Color _color = _randomColor.randomColor(
-  //   colorSaturation: ColorSaturation.highSaturation
-  // );
-
   //document IDs
   List<String> docIDs = [];
-
   // get docIDs
   Future getDocIDs () async {
     await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
@@ -200,28 +197,77 @@ class _EmployeeListState extends State<EmployeeList> {
                       width: 700,
                       height: 700,
                       decoration: const BoxDecoration(
-                          color: Color(0xffE5E5E5),
-                          // boxShadow: BoxShadow(color: Colors.blue),
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30))),
-                      child: FutureBuilder(
-                        future: getDocIDs(),
-                        builder: ((context, snapshot) {
-                          return ListView.builder(
-                            itemCount: docIDs.length,
-                            itemBuilder: ((context, index) {
-                              return Column(
-                              children: [
-                                ListTile(
-                                  title: GetNhanVienInformation(documentId: docIDs[index], resualt: docIDs[index],),
-                                ), 
-                              ],
-                            );
-                          }));
-                        }),
-                        
-                      ),
+                      color: Color(0xffE5E5E5),
+                      // boxShadow: BoxShadow(color: Colors.blue),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30))),
+                    child: StreamBuilder<QuerySnapshot>(
+                    stream: users,
+                    builder: ((context, snapshot){
+                      if(snapshot.hasError){
+                      return const Text('Something went Wrong.');
+                      }
+                      if(snapshot.connectionState == ConnectionState.waiting){
+                      return const Text('Laoding.....');
+                      }
+                      final data = snapshot.requireData;
+                      return ListView.builder(
+                      itemCount: data.size,
+                      itemBuilder: ((context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 56,
+                                width: 327,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xffFFFFFF),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                          BorderRadius.circular(10))),
+                                    onPressed: (() {
+                                      // print('Data ${data.docs[index]['joindate']}');
+                                      // print('data');
+                                    Navigator.push(context, MaterialPageRoute(builder: ((context) =>   PassData(
+                                      name:data.docs[index]['name'],
+                                      designation: data.docs[index]['designation'],
+                                      id: data.docs[index]['id'],
+                                      email: data.docs[index]['email'], 
+                                      numberphone: data.docs[index]['numberphone'],
+                                      reference: data.docs[index]['reference'],
+                                      workingday:data.docs[index]['workingday'],
+                                      ))));
+                                      }),
+                                  child:Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                     Row(
+                                      children: [
+                                      CircleAvatar(backgroundColor: Colors.amber,child: Text('${data.docs[index]['designation']}'),),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 10),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text('${data.docs[index]['name']}', style: const TextStyle(color: Color(0xff22215B),),),
+                                            Text('${data.docs[index]['designation']}',style: const TextStyle(color: Color(0xff9090AD))),
+                                          ],
+                                        ),
+                                      ),
+                                      ],
+                                      ),
+                                      const Icon(Icons.arrow_forward_ios_rounded, color: Color(0xff9090AD),)
+                                      ],
+                                      )),
+                                      )
+                                      ],
+                                    ),
+                                  );
+                                }));
+                             }))
                     )),
                   Padding(
                   padding: const EdgeInsets.only(top: 620, bottom: 8, left: 121, right: 121),
@@ -343,20 +389,24 @@ class CustomSearch extends SearchDelegate {
   }
 }
 
-class GetNhanVienInformation extends StatelessWidget {
+class GetNhanVienInformation extends StatefulWidget {
   final String documentId;
 
-  GetNhanVienInformation({required this.documentId, required String resualt});
-  
-  //  GetNhanVienInformation({Key.key});
+  const GetNhanVienInformation({required this.documentId, required String resualt, super.key});
 
+  @override
+  State<GetNhanVienInformation> createState() => _GetNhanVienInformationState();
+}
+
+class _GetNhanVienInformationState extends State<GetNhanVienInformation> {
+  //  GetNhanVienInformation({Key.key});
   @override
   Widget build(BuildContext context) {
     // get the collection
     CollectionReference nhanviens = FirebaseFirestore.instance.collection('AddNhanvien');
     print('list nhan vien $nhanviens');
     return FutureBuilder<DocumentSnapshot>(
-      future: nhanviens.doc(documentId).get(),
+      future: nhanviens.doc(widget.documentId).get(),
       builder:((context, snapshot) {
         if(snapshot.connectionState == ConnectionState.done){
           Map<String, dynamic> data = 
@@ -367,9 +417,9 @@ class GetNhanVienInformation extends StatelessWidget {
             width: 327,
             child: ElevatedButton(
               onPressed: (() {
-                print("doumentId ${documentId}");
-               Navigator.push(context, MaterialPageRoute(
-                builder: (context)=> UserDetail(documentId)));// a log list nhanviens ra xem no se ra cai id nay
+              //   print("doumentId ${widget.documentId}");
+              //  Navigator.push(context, MaterialPageRoute(
+              //   builder: (context)=> UserDetail(s)));// a log list nhanviens ra xem no se ra cai id nay
               }),
               style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xffFFFFFF),

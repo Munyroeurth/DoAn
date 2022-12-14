@@ -9,7 +9,7 @@ class EmployeeManagement extends StatefulWidget {
   @override
   State<EmployeeManagement> createState() => _EmployeeManagementState();
 }
- final docId =[];//// k có cho commit file len 
+
 class _EmployeeManagementState extends State<EmployeeManagement> {
   @override
   Widget build(BuildContext context) {

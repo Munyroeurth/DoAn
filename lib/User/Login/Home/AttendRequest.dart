@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/User/Login/Home/HRMUser.dart';
+import 'package:flutter_application_1/Admin/Home/staffinfopassstatefull.dart';
+import 'package:get/get.dart';
 
 class AttendRequest extends StatefulWidget {
   const AttendRequest({super.key});
@@ -14,10 +16,7 @@ class AttendRequest extends StatefulWidget {
 
 class _AttendRequestState extends State<AttendRequest> {
   
-  final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien')
-  // .where("id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-  // .orderBy('name',descending: true)
-  .snapshots();
+  final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
 
   @override
   void initState() {
@@ -25,7 +24,7 @@ class _AttendRequestState extends State<AttendRequest> {
     super.initState();
   }
 
-
+ String txt = 'hello world';
 
   @override
   Widget build(BuildContext context) {
@@ -129,9 +128,46 @@ class _AttendRequestState extends State<AttendRequest> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
-                                        Text('User is: ${data.docs[index]['name']}'),
+                                        // Text('User is: ${data.docs[index]['name']}'),
                                         // Text('reference is: ${data.docs[index]['reference']}'),
                                         // Text('Id User is: ${data.docs[index]['id']}'),
+                                        SizedBox(
+                                          height: 53,
+                                          width: 233,
+                                          child: ElevatedButton(
+                                            onPressed: (() {
+                                              // Navigator.push(context, MaterialPageRoute(builder: ((context) =>   PassData(
+                                              //   name:data.docs[index]['name'],
+                                              //   designation: data.docs[index]['designation'],
+                                              //   id: data.docs[index]['id'],
+                                              //   joindate: data.docs[index]['joindate'], 
+                                              //   numberphone: data.docs[index]['numberphone'],
+                                              //   reference: data.docs[index]['reference'],
+                                              //   workingday:data.docs[index]['workingday'],
+                                              //   ))));
+                                            }),
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.lightBlueAccent,
+                                              
+                                            ),
+                                           child:Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  CircleAvatar(backgroundColor: Colors.amber,child: Text('${data.docs[index]['designation']}'),),
+                                                  Column(
+                                                    children: [
+                                                      Text('${data.docs[index]['name']}'),
+                                                     Text('${data.docs[index]['designation']}'),
+                                                    ],
+                                                  ),
+                                                
+                                                ],
+                                              ),
+                                              
+                                            ],
+                                           )),
+                                        )
                                       ],
                                     ),
                                   );
@@ -141,7 +177,6 @@ class _AttendRequestState extends State<AttendRequest> {
                         ),
                         ElevatedButton(
                         onPressed: (() async {
-
                           final res = await FirebaseFirestore.instance
                           .collection('AddNhanvien')
                           .where('uid', isEqualTo: FirebaseAuth.instance.currentUser?.uid)
@@ -175,4 +210,5 @@ class UserManagerment {
     // var
   }
 
-} final docId =[];//// k có cho commit file len 
+} 
+

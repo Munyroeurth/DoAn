@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/API/API_DIO/Get/Dio_button.dart';
 import 'package:flutter_application_1/src/API/API_DIO/Get/manget.dart';
+import 'package:flutter_application_1/src/API/API_DIO/Post/vidubaocao.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -34,8 +35,7 @@ class _PostDioState extends State<PostDio> {
                         decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Name'
-                       ),
-                                    
+                       ),           
                       ),
                     ),
                      Padding(
@@ -77,6 +77,19 @@ class _PostDioState extends State<PostDio> {
                             DioPostData;
                           }), 
                           child: Text('Post Button')),
+                      ),
+                    ),
+                     Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 53,
+                        width: 253,
+                        child: ElevatedButton(
+                          onPressed: ((){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const Vidubaocao()));
+                            DioPostData;
+                          }), 
+                          child: Text('BAO CAO VI DU')),
                       ),
                     ),
                   ],

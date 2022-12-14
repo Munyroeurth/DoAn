@@ -5,10 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/employeeList.dart';
  
 class UserDetail extends StatefulWidget {
+  late  String s;
+  // String id;
+  // String name;
+  // String designation;
+  // String gender;
+  // String reference;
+  // String contactNo;
+  // String joinDate;
+  // String workingday;
 
-  const UserDetail(String s, {super.key});
+  // UserDetail({
+  //   required this.id,
+  //   required this.contactNo,
+  //   required this.designation,
+  //   required this.gender,
+  //   required this.joinDate,
+  //   required this.name,
+  //   required this.reference,
+  //   required this.workingday,
+  //    super.key});
 
-  // const UserDetail(String s,{required Key key, required this.id, required this.name, required this.desination, required this.reference, required this.numberphone, required this.workingday, required this.documentId}) : super(key: key);
+   UserDetail({required String s, super.key});
 
   @override
   State<UserDetail> createState() => _UserDetailState();

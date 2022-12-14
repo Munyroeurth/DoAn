@@ -458,12 +458,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "random_color",
-      "rootUri": "file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/random_color-1.0.5",
-      "packageUri": "lib/",
-      "languageVersion": "2.0"
-    },
-    {
       "name": "rxdart",
       "rootUri": "file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dartlang.org/rxdart-0.27.5",
       "packageUri": "lib/",
@@ -602,7 +596,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-12-06T09:50:48.668854Z",
+  "generated": "2022-12-13T09:17:58.479774Z",
   "generator": "pub",
   "generatorVersion": "2.19.0-255.2.beta"
 }
