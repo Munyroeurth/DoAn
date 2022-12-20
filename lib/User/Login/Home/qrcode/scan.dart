@@ -1,9 +1,12 @@
 import 'dart:math';
 
+import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import '../../../../Admin/Login/SignIn/login/auth.dart';
 import 'homeqrcodeScreen.dart';
 class Scan extends StatefulWidget {
   const Scan({super.key});
@@ -17,16 +20,16 @@ class _ScanState extends State<Scan> {
   final controllerqrcodeData = TextEditingController();
 
   String qrcodeResult = "Unknow";
+  
+  final User? user = Auth().currentUser;
 
-Future PostData() async {
-  final postData = await FirebaseFirestore.instance.collection('AddNhanvien').doc('NYJGg7ChWO8NXzy16rMr').set(qrcodeResult as Map<String, dynamic>);
-  // debugPrint('PostData $');
-}
+  Future<void> postDataQrcode() async {
+    await Auth().postDataQrcode();
+  }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: const Text('SCAN')),
       body: Column(
         children: <Widget>[
           Container(
@@ -118,12 +121,6 @@ Future PostData() async {
                             borderRadius:BorderRadius.circular(10)),
                             child: Column(
                               children: [
-                              // TextFormField(
-                              //   controller: controllerqrcodeData,
-                              //   decoration: const InputDecoration(
-                              //     hintText: "qrcodeResult"
-                              //   ),
-                              // ),
                               Padding(
                               padding: const EdgeInsets.only(top: 50, right: 10, left: 10),
                               child: Text(qrcodeResult,
@@ -149,8 +146,10 @@ Future PostData() async {
                             ),
                             onPressed: (() {
                               Map<String,dynamic> dataqrcode = {"qrcodeLink":qrcodeResult};
-                              FirebaseFirestore.instance.collection('AddNhanvien').doc('NYJGg7ChWO8NXzy16rMr').update(dataqrcode);
-                              PostData();
+                              FirebaseFirestore.instance
+                              .collection('Employee')
+                              .doc('ujWkGkMi4WnTFMmrLdoG')
+                              .update(dataqrcode);
                               ScanBarcode();
                               print('ScanBarcode ${ScanBarcode}');
                               print('Qrcode');
@@ -192,5 +191,6 @@ Future PostData() async {
     qrcodeResult = 'Failed to get platform version';
    }
   }
+
+ 
 }
- final docId =[];//// k có cho commit file len 

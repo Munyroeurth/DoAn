@@ -230,9 +230,10 @@ class _PassDataState extends State<PassData> {
                                     final deletUser = await FirebaseFirestore.instance
                                     .collection('AddNhanvien')
                                     .doc(widget.id);
-                                    // .doc('5nJ8KN3nN6tVY4jMMdXr');
-                                    deletUser.delete();
+                                    // .doc('AAzmsPE4o3T8cqZeYlWBQDMo7Eq2');
+                                    deletUser.delete().then((value) => print("Data deleted successfully"));
                                     print(deletUser);
+                                    // widget.id : FieldValue.delete();
                                   }),
                                   child:const Text('Delete') ),
                               ),
@@ -252,7 +253,6 @@ class _PassDataState extends State<PassData> {
                                         email: widget.email,
                                         id: widget.id,
                                         name:widget.name,
-                                        // pass: widget.,
                                         reference: widget.reference,
                                         workingday: widget.workingday,
                                       )));

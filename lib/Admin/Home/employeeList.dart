@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_application_1/Admin/Home/eddSuc.dart';
-import 'package:flutter_application_1/Admin/Home/UserSuc.dart';
 
 import 'staffinfopassstatefull.dart';
 
@@ -350,8 +349,9 @@ class CustomSearch extends SearchDelegate {
         itemBuilder: (context, index){
         var resualt = matchQuery[index];
         // var resualtSearch = docIDs[index];
-        return ListTile(
-          title: GetNhanVienInformation(documentId: resualt[index],resualt:resualt[getDocIDs.hashCode])
+        return  ListTile(
+          // title: EmployeeList(),
+          title: GetNhanVienInformation(documentId: resualt[index])
           // title: Text(resualt)
           );
         }
@@ -378,8 +378,9 @@ class CustomSearch extends SearchDelegate {
         itemBuilder: (context, index){
         var resualt = matchQuery[index];
         debugPrint(resualt);
-        return ListTile(
-          title: GetNhanVienInformation(documentId: docIDs[index], resualt: resualt[index],)
+        return  ListTile(
+          // title: EmployeeList(),
+          title: GetNhanVienInformation(documentId: docIDs[index],)
           // title: Text(resualt)
           );
           }
@@ -392,7 +393,7 @@ class CustomSearch extends SearchDelegate {
 class GetNhanVienInformation extends StatefulWidget {
   final String documentId;
 
-  const GetNhanVienInformation({required this.documentId, required String resualt, super.key});
+  const GetNhanVienInformation({required this.documentId, super.key});
 
   @override
   State<GetNhanVienInformation> createState() => _GetNhanVienInformationState();
@@ -432,7 +433,7 @@ class _GetNhanVienInformationState extends State<GetNhanVienInformation> {
                Row(
                 children: [
                    CircleAvatar(
-                    // backgroundColor: _radomColor,
+                    backgroundColor: Colors.amber,
                     child: Text('${data['designation']??''}'),) ,
                 Padding(
                   padding: const EdgeInsets.only(left: 5),

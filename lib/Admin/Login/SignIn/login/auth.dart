@@ -43,5 +43,9 @@ class Auth {
    Future<void> edit() async {
     // await _firebaseAuth.edit();
   }
+
+  postDataQrcode() async {
+  
+  
+  }
 }
- final docId =[];//// k có cho commit file len 

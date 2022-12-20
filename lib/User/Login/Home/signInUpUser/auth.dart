@@ -19,8 +19,6 @@ class Auth {
   Future<AddNhanVien?> signInWithEmailAndPassword({
     required String email,
     required String password, 
-    // required String employeeId,
-    
   }) async {
     UserCredential user = await _firebaseAuth.signInWithEmailAndPassword(
       email: email,
@@ -42,11 +40,10 @@ class Auth {
       reference: userJson['reference']);
     
   }
- final docId =[];//// k có cho commit file len 
   Future<String?> createUserWithEmailAndPassword({
     required String email,
     required String password, 
-    // required String employeeId,
+   
   }) async {
     UserCredential user = await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
@@ -57,6 +54,10 @@ class Auth {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  Future<void> postDataQrcode() async {
+    // await _firebaseAuth.postDataQrcode();
   }
 
    Future<void> edit() async {

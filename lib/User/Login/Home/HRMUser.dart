@@ -1,5 +1,4 @@
 // import 'package:http/http.dart' as http;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/User/Login/Home/AttendRequest.dart';
@@ -10,10 +9,21 @@ import 'package:flutter_application_1/User/Login/signUpUser.dart';
 import 'package:flutter_application_1/src/API/API_DIO/Post/PostDio.dart';
 import 'package:flutter_application_1/src/widget/linearprogressbar.dart';
 
-
-
 class HRMUserScreen extends StatefulWidget {
-  const HRMUserScreen({super.key});
+  // String name;
+  // String designation;
+  // String id;
+  // String email;
+  // String reference;
+  // String workingday;
+   HRMUserScreen({
+    // required this.name,
+    // required this.designation,
+    // required this.id,
+    // required this.email,
+    // required this.reference,
+    // required this.workingday,
+    super.key});
   @override
   State<HRMUserScreen> createState() => _HRMUserScreenState();
 }
@@ -24,72 +34,18 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
 
   final nhanvien = FirebaseAuth.instance.currentUser!;
 
-  // Future readData() async {
-  //  final docsUsers = FirebaseFirestore.instance.collection('AddNhanvien');
-  //  final snapshot = await docsUsers.get();
-   
-  // }
-
-  List<String> docIDs = [];
-   // Get docIDs
-   Future getDocIDs () async {
-     final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
-      (QuerySnapshot snapshot) => snapshot.docs.forEach(
-        (DocumentSnapshot doc){
-        print(doc.data);
-        print(getDocIDs());
-        
-        // print(doc.documentID);
-        // print(document.reference);
-        // docIDs.add(document.reference.id);
-        // print('doIDs ${docIDs}');
-      },
-    ));
-    
-   }
-
   @override 
   void initState(){
-    // print("User ${nhanvien.uid}");
-    // print("User ${nhanvien.email}");
-    // getDocIDs();
     super.initState();
   }
-  //  PlatformFile? pickedFiles;
-  //  UploadTask? uploadTask;
-  //  Future selectFile() async {
-  //   final result = await FilePicker.platform.pickFiles();
-  //   if(result == null) return;
-  //   setState(() {
-  //     pickedFiles = result.files.first;
-  //   });
-  //  }
-
-  //  Future UploadFile () async {
-  //   final path = 'files/${pickedFiles!.name}';
-  //   // final file = File(pickedFiles!.path!);
-
-  //   final ref = FirebaseStorage.instance.ref().child(path);
-  //   setState(() {
-  //   //  uploadTask = ref.putFile(file);
-  //  });
-  //   final snapshot = await uploadTask!.whenComplete((){
-
-  //   });
-  //   final urlDownload = await snapshot.ref.getDownloadURL();
-  //   print('Download Link: $urlDownload');
-  //   setState(() {
-  //     uploadTask = null;
-  //   });
-  //  }
-
+ 
   final User? user = Auth().currentUser;
-  // final postData = FirebaseFirestore.instance.collection('AddNhanvien').get();
 
   Future<void> signOut() async {
     await Auth().signOut();
     print("Sign Out");
   }
+  
   Future<void> edit() async {
     await Auth().edit();
   }
@@ -126,27 +82,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
     ),
   );
   }
-  Widget _signOutButton1() {
-  return SizedBox(
-    height: 53,
-    width: 400,
-    child: ElevatedButton(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: const Color(0xff567DF4),
-      // minimumSize: Size(327, 54),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(10))),
-      onPressed: (() {
-        // readData();
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpUser()));
-      }),
-      child: const Text('dataID', style: TextStyle(fontSize: 20),),
-    ),
-  );
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,7 +136,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                   child: IconButton(
                                     onPressed: (() {
                                     setState(() {
-                                      _ProfileModal(context);
+                                      profileModal(context);
                                     });
                                     }),
                                     icon: const Icon(Icons.menu),
@@ -585,14 +521,9 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                   padding: const EdgeInsets.only(top: 20),
                                   child: _signOutButton(),
                                 ),
-                                 Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: _signOutButton1()),
-                                
                             ],
                           ),
                         ))),
-               
               ],
             ),
           )
@@ -602,7 +533,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
   }
 
 
-_ProfileModal(context,){
+ profileModal(context,){
   String value = 'profile';
   showDialog(context: context,
   builder: (BuildContext context) {
@@ -844,7 +775,7 @@ _ProfileModal(context,){
                      child: CircleAvatar(
                      backgroundColor: Color.fromARGB(255, 55, 59, 57),
                      radius: 100,
-                     backgroundImage: AssetImage('Image/profile.png'),
+                    //  backgroundImage: AssetImage('Image/b.png'),
                      // backgroundImage: AssetImage('pickedFile!.name'),
                      // child: Image.file(
                      //   File(pickedFiles?.path),

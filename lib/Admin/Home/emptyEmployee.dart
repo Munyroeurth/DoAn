@@ -10,7 +10,7 @@ class EmptyEmployee extends StatefulWidget {
   @override
   State<EmptyEmployee> createState() => _EmptyEmployeeState();
 }
- final docId =[];//// k có cho commit file len 
+
 class _EmptyEmployeeState extends State<EmptyEmployee> {
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,7 @@ class _EmptyEmployeeState extends State<EmptyEmployee> {
                               width: 300,
                               child: ElevatedButton(
                                 onPressed: (() {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const AddSuccess()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>  const EmployeeList()));
                                 }),
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:

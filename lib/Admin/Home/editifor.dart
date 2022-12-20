@@ -29,11 +29,10 @@ class _EditInforNVState extends State<EditInforNV> {
 
     // final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
 
-    // final TextEditingController _name = TextEditingController();
-    // final TextEditingController _numberphone = TextEditingController();
-    // final TextEditingController _email = TextEditingController();
-    // final TextEditingController _password = TextEditingController();
-    // final TextEditingController _workingday = TextEditingController();
+    final TextEditingController namecontroller = TextEditingController();
+    final TextEditingController emailcontroller = TextEditingController();
+    final TextEditingController designationcontroller = TextEditingController();
+    final TextEditingController workingdaycontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -108,18 +107,15 @@ class _EditInforNVState extends State<EditInforNV> {
                                 children: const [
                                   Text('Email'),
                                   Text('IDs'),
-                                  Text('Password'),
-                                
+                                  // Text('Password'),
                                 ],
                               ),
                               Container(height: 2, color: Colors.black,),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  
                                   Text(widget.email),
-                                  Text(widget.id),
-                                  // Text(widget.pass),
+                                  Text(widget.id, style: const TextStyle(fontSize: 10),),
                                   
                                 ],
                               )
@@ -132,12 +128,12 @@ class _EditInforNVState extends State<EditInforNV> {
                     height: 45,
                     width: 336,
                     child: TextField(
-                      // controller: _name,
+                      controller: namecontroller,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)
                         ),
-                        // hintText: widget.name,
+                        hintText: widget.name,
                         labelText: 'Name',
                         
                       )),
@@ -148,12 +144,12 @@ class _EditInforNVState extends State<EditInforNV> {
                       height: 45,
                       width: 336,
                       child: TextField(
-                        // controller: _numberphone,
+                        controller: emailcontroller,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)
                           ),
-                          // hintText: widget.email,
+                          hintText: widget.email,
                           labelText: 'Email',
                         )),
                       ),
@@ -162,13 +158,13 @@ class _EditInforNVState extends State<EditInforNV> {
                     height: 45,
                     width: 336,
                     child: TextField(
-                      // controller: _email,
+                      controller: designationcontroller,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10)
                         ),
-                        // hintText: widget.pass,
-                        labelText: 'Password',
+                        hintText: widget.designation,
+                        labelText: 'Designation',
                       )),
                     ),
                     Padding(
@@ -177,30 +173,16 @@ class _EditInforNVState extends State<EditInforNV> {
                       height: 45,
                       width: 336,
                       child: TextField(
-                        // controller:_password ,
+                        controller:workingdaycontroller,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)
                           ),
-                          // hintText: widget.workingday,
+                          hintText: widget.workingday,
                           labelText: 'working days',
                         )),
                       ),
                     ),
-                    // SizedBox(
-                    // height: 54,
-                    // width: 336,
-                    // child: TextField(
-                    //   // controller: _workingday,
-                    //   decoration: InputDecoration(
-                    //     border: OutlineInputBorder(
-                    //     borderRadius: BorderRadius.circular(10)
-                    //     ),
-                    //     hintText: widget.reference,
-                    //     labelText: 'Reference',
-                    //   )),
-                    // ),
-
                     //button
                      Padding(
                        padding: const EdgeInsets.only(top: 10),
@@ -215,23 +197,35 @@ class _EditInforNVState extends State<EditInforNV> {
                           )
                         ),
                           onPressed: (() {
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>const EmployeeList()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>EditInforNV(
+                              name: widget.name.trim(),
+                               designation:widget.designation.trim(),
+                                id: widget.id.trim(),
+                                email: widget.id.trim(),
+                                reference: widget.reference.trim(),
+                                workingday: widget.workingday.trim()
+                                )));
                               final docUser = FirebaseFirestore.instance
                               .collection('AddNhanvien')
-                              .doc('0ttknBHP1J2GNTulu4c2');
+                              .doc(widget.id);
                               // Update specific field
                               docUser.update({
-                                'id' : 'M9',
-                                'name' : 'Hati',
-                                'numberPhone' : '0939298220',
-                                'designation' : 'MB',
-                                'workingday' : 'Tuesday-Saturday',
-                                'gender' : 'Male',
-                                'email':'deny@gmail.com',
-                                'password':'deny009',
-                                'reference': 'Anh Long',
+                                'name':widget.name,
+                                'email':widget.email,
+                                'designation':widget.designation,
+                                'workingday':widget.workingday,
+
+                                // 'id' : 'M9',
+                                // 'name' : 'Puthika Molika',
+                                // 'numberphone' : '0939298220',
+                                // 'designation' : 'Js',
+                                // 'workingday' : 'Tuesday-Saturday',
+                                // 'gender' : 'Male',
+                                // 'email':'deny@gmail.com',
+                                // 'password':'deny009',
+                                // 'reference': 'Anh Long',
                                 // 'wfhlEMdj0VPplhipYZNW' : FieldValue.delete(),// delete some parameter
-                              }).then((value) => print("Data Added successfully")); 
+                              }).then((value) => print("Data Updated successfully")); 
                           }),
                           child:const Text('Sumit', style: TextStyle(color: Color(0xff22215B), fontFamily: 'Manrope', fontSize: 20,fontWeight: FontWeight.bold),)),
                         ),
@@ -242,7 +236,6 @@ class _EditInforNVState extends State<EditInforNV> {
               ),
             ],
            ),
-
         ),
       ),
     );

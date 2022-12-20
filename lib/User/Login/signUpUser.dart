@@ -56,7 +56,7 @@ class _SignUpUserState extends State<SignUpUser> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const HRMUserScreen()));
+                                               HRMUserScreen()));
                                   }),
                                   icon: const Icon(
                                     Icons.arrow_back,
@@ -311,7 +311,7 @@ class _SignUpUserState extends State<SignUpUser> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                            const HRMUserScreen()));
+                                             HRMUserScreen()));
                                        }).onError((error, stackTrace){
                                         print("Error ${error.toString()}");
                                        });

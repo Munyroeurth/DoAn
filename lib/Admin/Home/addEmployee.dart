@@ -722,6 +722,8 @@ class AddNhanVien {
     'gender':gender,
     'reference': reference 
   };
+
+  toLowerCase() {}
 }
 
 class DetailScreen extends StatelessWidget {

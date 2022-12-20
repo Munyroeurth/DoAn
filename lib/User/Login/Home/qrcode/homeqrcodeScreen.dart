@@ -43,7 +43,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const HRMUserScreen()));
+                                               HRMUserScreen()));
                                 }),
                                 icon: const Icon(
                                   Icons.arrow_back,
@@ -122,12 +122,12 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                                   ),
                                 ),
                               ),
-                              TextButton(
-                                onPressed:(() {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
-                                }) , child: const Text('Nhan Dang Test')),
-                              TextButton(onPressed: (() => Navigator.push(context, MaterialPageRoute(builder: (context)=>BooingQRGenerate(abid: 1, uid: 2, txnid: 3)))), 
-                              child: Text('GENERETE QRCODE WITH 3 VALUE'))
+                              // TextButton(
+                              //   onPressed:(() {
+                              //     Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginScreen()));
+                              //   }) , child: const Text('Nhan Dang Test')),
+                              // TextButton(onPressed: (() => Navigator.push(context, MaterialPageRoute(builder: (context)=>BooingQRGenerate(abid: 1, uid: 2, txnid: 3)))), 
+                              // child: Text('GENERETE QRCODE WITH 3 VALUE'))
                             ],
                           ),
                         )))
@@ -138,7 +138,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
       ),
     );
   }
-   final docId =[];//// k có cho commit file len 
+
 
   /*****Xay Dung ham Sceen Code********/
 void ScanQRCode() async {

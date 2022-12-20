@@ -16,14 +16,16 @@ class _generateState extends State<generate> {
 
   String qrData = "https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/(S(23ljqbc1g2glmncz4ivhpbo3))/StudyRegister/StudyRegister.aspx";
   
+  
 
   final docDatas = [];
-  final docId =[];//// k có cho commit file len 
 
-  Future DatasQrcode () async{
+  Future datasQrcode () async{
     final dataqrcode = await FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
     debugPrint('dataqrcode${dataqrcode}');
+    // AddNhanVien user = await 
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +95,7 @@ class _generateState extends State<generate> {
                                 autofocus: true,
                                 keyboardType: TextInputType.text,
                                 controller: qrText,
-                                // ignore: prefer_const_constructors
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   hintText: "Enter the Data/LINK"
                                 ),
                               ),

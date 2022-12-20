@@ -276,7 +276,7 @@ class _MobileOTPUserState extends State<MobileOTPUser> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const HRMUserScreen()));
+                                        builder: (context) => HRMUserScreen()));
                               }),
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: BackgrnColor,

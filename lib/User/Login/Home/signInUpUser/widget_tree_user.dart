@@ -18,7 +18,7 @@ class _WidgetTreeUserState extends State<WidgetTreeUser> {
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return  const HRMUserScreen();
+          return   HRMUserScreen();
         } else {
           return const LoginPage();
         }
@@ -26,4 +26,4 @@ class _WidgetTreeUserState extends State<WidgetTreeUser> {
     );
   }
 }
- final docId =[];//// k có cho commit file len 
+

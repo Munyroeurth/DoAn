@@ -43,7 +43,6 @@ class _EmployeeScreenState extends State<EmployeeScreen> {
             color: Colors.orange,
             child: const Center(
               child: Text(
-                
                 "Scan QR Code",
                 style: TextStyle(
                   color: Colors.white,

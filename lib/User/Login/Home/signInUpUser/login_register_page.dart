@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
+import 'package:flutter_application_1/User/Login/Home/HRMUser.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
 import 'package:flutter_application_1/User/Login/signUpUser.dart';
 import '../../../../Admin/Login/selectRoleScreen.dart';
@@ -12,7 +13,7 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-const BackgrnColor = Color(0xff567DF4);
+const backgrnColor = Color(0xff567DF4);
 
 class _LoginPageState extends State<LoginPage> {
   bool isVisible = true;
@@ -23,16 +24,19 @@ class _LoginPageState extends State<LoginPage> {
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-  final TextEditingController _controllerId = TextEditingController();
+
 
   Future<void>  signInWithEmailAndPassword() async {
     try {
       AddNhanVien? user = await Auth().signInWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
-        // employeeId:_controllerId.text,
+        
       );
       print(user?.name);
+      // print(user?.designation);
+      // print(user?.email);
+      // print(user?.pass);
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -45,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
         await Auth().createUserWithEmailAndPassword(
         email: _controllerEmail.text,
         password: _controllerPassword.text,
-        // employeeId:_controllerId.text,
+      
       );
      
     } on FirebaseAuthException catch (e) {
@@ -55,7 +59,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
  
-
   Widget _entryField(
     String title,
     TextEditingController controller,
@@ -105,7 +108,6 @@ class _LoginPageState extends State<LoginPage> {
           hintText: 'PassWord',
           labelText: 'PassWord',
           suffixIcon: IconButton(
-
               onPressed: () {
                 setState(() {
                   isVisible = !isVisible;
@@ -138,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                 BorderRadius.circular(10))),
     );
   }
- final docId =[];//// k có cho commit file len 
+
   Widget _errorMessage() {
     return Text(errorMessage == '' ? '' : 'Your Information ? $errorMessage', style: const TextStyle(color: Colors.red),);
   }
@@ -173,11 +175,17 @@ class _LoginPageState extends State<LoginPage> {
       child: ElevatedButton(
           //  onPressed: onpressedFunction,
         onPressed:
-        signInWithEmailAndPassword,
-        // (() {
-        //   getDataIDs;
-        //   isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
-        // }),
+        (() {
+            signInWithEmailAndPassword();
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HRMUserScreen(
+              // designation: '',
+              // email: '',
+              // id: '',
+              // name: '',
+              // reference: '',
+              // workingday: '',
+              )));
+        }),
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xff567DF4),
             elevation: 0,
@@ -202,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                     width: 600,
                     height: 800,
                     // color: Color.fromARGB(255, 41, 121, 187),
-                    color: BackgrnColor,
+                    color: backgrnColor,
                     child: Padding(
                       padding: const EdgeInsets.only(),
                       child: Column(
@@ -287,40 +295,12 @@ class _LoginPageState extends State<LoginPage> {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        _Id('employeeId',_controllerId),
+                        // _Id('employeeId',_controllerId),
                         Padding(
                           padding: const EdgeInsets.only(top:20, bottom: 20),
                           child: _Email('Emails', _controllerEmail),
                         ),
                         _Password('Password', _controllerPassword),
-                        // GestureDetector(
-                        //   onTap: (() async  {
-                        //     String id = _controllerId.toString();
-                        //     String Email = _controllerEmail.toString();
-                        //     String Pass = _controllerPassword.toString();
-                        //     if(id.isNotEmpty) {
-                        //       if (Pass.isEmpty) {
-                        //         if (Email.isNotEmpty) {
-                        //           DocumentSnapshot snap = await FirebaseFirestore.instance
-                        //             .collection("AddNhanvien")
-                        //             .doc(id.toUpperCase())
-                        //             .get();
-                        //           String password = snap ['password'];
-                        //           if(Pass == password) {
-                        //             setState(() {
-                        //               LoginInfo.id = id.toLowerCase();  
-                        //             });
-                        //             Navigator.pushReplacement(context,
-                        //              MaterialPageRoute(builder: (context)=>const HRMUserScreen()));
-                        //           }
-                                  
-                        //         }
-                                
-                        //       }
-                        //     }
-                            
-                        //   }),
-                        // ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: _errorMessage(),
@@ -330,7 +310,6 @@ class _LoginPageState extends State<LoginPage> {
                            child: _fogetpass(),
                          ),
                         _submitButton(),
-                        
                          Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
