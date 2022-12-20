@@ -158,7 +158,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                         width: 200,
                         height: 300,
                         decoration: const BoxDecoration(
-                            color: Color(0xffE5E5E5),
+                            color: Color(0xffFAFAFA),
                             // border: Border.all(color: Colors.black, width: 1),
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(30),

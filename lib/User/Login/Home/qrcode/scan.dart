@@ -133,8 +133,9 @@ class _ScanState extends State<Scan> {
                             ),
                             ),
                           ),
+                          //***************CHECK IN******** */
                         Padding(
-                          padding: const EdgeInsets.only(top: 70),
+                          padding: const EdgeInsets.only(top: 20),
                           child: SizedBox(
                           height: 54,
                           width: 280,
@@ -162,7 +163,33 @@ class _ScanState extends State<Scan> {
                             //     // print(qrcodeResult);
                             //   });
                             // },
-                            child: const Text('SCAN QRCODE CHẤM CÔNG'),
+                            child: const Text('Check In'),
+                          ),
+                        ),
+                        ),
+                        //*************CHECK OUT*******/
+                         Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: SizedBox(
+                          height: 54,
+                          width: 280,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)
+                              )
+                            ),
+                            onPressed: (() {
+                              Map<String,dynamic> dataqrcode = {"qrcodeLink":qrcodeResult};
+                              FirebaseFirestore.instance
+                              .collection('Employee')
+                              .doc('ujWkGkMi4WnTFMmrLdoG')
+                              .update(dataqrcode);
+                              ScanBarcode();
+                              print('ScanBarcode ${ScanBarcode}');
+                              print('Qrcode');
+                            }),
+                            child: const Text('Check Out'),
                           ),
                         ),
                         ),
