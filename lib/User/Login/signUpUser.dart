@@ -10,7 +10,7 @@ class SignUpUser extends StatefulWidget {
   @override
   State<SignUpUser> createState() => _SignUpUserState();
 }
-const BackgrnColor = Color(0xff567DF4);
+const backgrnColor = Color(0xff567DF4);
 class _SignUpUserState extends State<SignUpUser> {
   bool isVisible = true;
   bool isToggle = true;
@@ -34,7 +34,7 @@ class _SignUpUserState extends State<SignUpUser> {
                   width: 400,
                   height: 600,
                   // color: Color.fromARGB(255, 41, 121, 187),
-                  color: BackgrnColor,
+                  color: backgrnColor,
                   child: Padding(
                     padding: const EdgeInsets.only(),
                     child: Column(

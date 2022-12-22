@@ -1,12 +1,15 @@
 // import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
+import 'package:flutter_application_1/Admin/Home/employeeChecktime.dart';
 import 'package:flutter_application_1/User/Login/Home/AttendRequest.dart';
 import 'package:flutter_application_1/User/Login/Home/PhiChiLuong.dart';
 import 'package:flutter_application_1/User/Login/Home/qrcode/homeqrcodeScreen.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
+import 'package:flutter_application_1/User/Login/Home/staffInfo.dart';
 import 'package:flutter_application_1/User/Login/signUpUser.dart';
-import 'package:flutter_application_1/src/API/API_DIO/Post/PostDio.dart';
 import 'package:flutter_application_1/src/widget/linearprogressbar.dart';
 
 class HRMUserScreen extends StatefulWidget {
@@ -28,18 +31,22 @@ class HRMUserScreen extends StatefulWidget {
   State<HRMUserScreen> createState() => _HRMUserScreenState();
 }
 
-const BackgrnColor = Color(0xff567DF4);
+const backgrnColor = Color(0xff567DF4);
 
 class _HRMUserScreenState extends State<HRMUserScreen> {
 
-  final nhanvien = FirebaseAuth.instance.currentUser!;
+  final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
+
+  // final nhanvien = FirebaseAuth.instance.currentUser!;
 
   @override 
   void initState(){
     super.initState();
+    
   }
  
   final User? user = Auth().currentUser;
+  // final AddNhanVien? user = Auth().currentUser as AddNhanVien?;
 
   Future<void> signOut() async {
     await Auth().signOut();
@@ -57,6 +64,8 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(user?.email ?? 'User Email', style: const TextStyle(fontSize: 14),),
+        // Text(AddNhanVien)
+       
           
       ],
     );
@@ -95,7 +104,7 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                     width: 375,
                     height: 812,
                     decoration: const BoxDecoration(
-                      color: BackgrnColor,
+                      color: backgrnColor,
                     ),
                     child: Column(
                       children: [
@@ -234,7 +243,16 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) =>
-                                                                             PostDio()));
+                                                                            StaffInfo(
+                                                                              designation:'user?.designation',
+                                                                              email: 'user?.email',
+                                                                              gender: 'user?.gender',
+                                                                              id: 'user?.id',
+                                                                              name: 'user?.name',
+                                                                              numberphone:'user?.numberphone',
+                                                                              reference: 'user?.reference',
+                                                                              workingday: 'user?.workingday',
+                                                                            )));
                                                           }),
                                                           child: const Image(
                                                               image: AssetImage(
@@ -517,10 +535,14 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
                                   ],
                                 ),
                               ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: _signOutButton(),
-                                ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: _signOutButton(),
+                              ),
+                              Text(user?.uid ?? 'User Email', style: const TextStyle(fontSize: 10),),
+                              Text(user?.toString() ?? 'Email', style: TextStyle(fontSize: 10),),
+                              Text(user?.displayName.toString() ?? 'email'),
+                              Text(user?.getIdTokenResult().toString() ?? 'email'),
                             ],
                           ),
                         ))),

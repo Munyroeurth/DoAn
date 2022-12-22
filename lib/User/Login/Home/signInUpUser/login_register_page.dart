@@ -34,9 +34,9 @@ class _LoginPageState extends State<LoginPage> {
         
       );
       print(user?.name);
-      // print(user?.designation);
-      // print(user?.email);
-      // print(user?.pass);
+      print(user?.designation);
+      print(user?.email);
+      print(user?.pass);
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;

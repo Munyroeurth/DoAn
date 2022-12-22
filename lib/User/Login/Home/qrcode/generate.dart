@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
+import 'package:flutter_application_1/Admin/Home/employeeChecktime.dart';
 import 'package:flutter_application_1/User/Login/Home/qrcode/homeqrcodeScreen.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -18,12 +20,22 @@ class _generateState extends State<generate> {
   
   
 
-  final docDatas = [];
+  // final docDatas = [];
 
-  Future datasQrcode () async{
-    final dataqrcode = await FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
-    debugPrint('dataqrcode${dataqrcode}');
-    // AddNhanVien user = await 
+  Future<AddNhanVien?> datasQrcode () async{
+    var userJson = {};
+    await FirebaseFirestore.instance.collection('AddNhanvien').where('id', isEqualTo: user.uid).get().then((value) => {
+      userJson = value.docs.first.data()
+    });
+    return AddNhanVien(
+      name: userJson['name'],
+     numberphone: userJson['numberphone'],
+      email: userJson['email'],
+      pass: userJson['password'],
+      designation:userJson['designation'],
+      workingday: userJson['workingday'], 
+      gender: userJson['gender'],
+      reference: userJson['reference']);
   }
   
 
@@ -81,11 +93,11 @@ class _generateState extends State<generate> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             QrImage(
-                              data: qrData,
+                              data: '$datasQrcode',
                               version: QrVersions.auto,
                               gapless: false,
                               size: 200,
-                              embeddedImage: const AssetImage('Image/Qcode.png'),
+                              // embeddedImage: const AssetImage('Image/Qcode.png'),
                               embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(50,50)),
                              ), 
                             const Text('Get Your Data/Link to the QR CODE ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
@@ -130,16 +142,18 @@ class _generateState extends State<generate> {
                                     )
                                   ),
                                   onPressed: () {
-                                    if(qrText.text.isEmpty){
-                                      setState(() {
-                                        qrData = "https://flutter.dev";
-                                      });   
-                                    }else{
-                                     setState(() {
-                                        qrData = qrText.text;
-                                     });  
-                                    }
-                                    print("qrcodeData: ${qrData}");
+                                    datasQrcode();
+                                    // if(qrText.text.isEmpty){
+                                    //   setState(() {
+                                    //     // qrData = "https://flutter.dev";
+                                    //     datasQrcode();
+                                    //   });   
+                                    // }else{
+                                    //  setState(() {
+                                    //     // qrData = qrText.text;
+                                    //  });  
+                                    // }
+                                    print("qrcodeData: ${datasQrcode}");
                                   },
                                   child: const Text('QENERATE QRCODE'),
                                 ),
@@ -160,8 +174,6 @@ class _generateState extends State<generate> {
   }
   final qrText = TextEditingController();
 
-  final idText = TextEditingController();
-  final nameText = TextEditingController();
 }
 
 class DatasUserQrcode {

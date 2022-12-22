@@ -100,9 +100,25 @@ class _ScanState extends State<Scan> {
                       topRight: Radius.circular(30)
                     ) ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 80),
+                    padding: const EdgeInsets.only(top: 20),
                     child: Column(
                     children: [
+                      Container(
+                        height: 53,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20)
+                        ),
+                        child: Row(
+                          children: [
+                          const CircleAvatar(backgroundColor: Colors.deepPurple, child: Text('M'),),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(user?.email?? 'Email'),
+                          )
+                          ],
+                        ),
+                      ),
                       const Text('RESUALT CHẤM CÔNG CỦA BẠN',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -151,18 +167,13 @@ class _ScanState extends State<Scan> {
                               .collection('Employee')
                               .doc('ujWkGkMi4WnTFMmrLdoG')
                               .update(dataqrcode);
+
                               ScanBarcode();
                               print('ScanBarcode ${ScanBarcode}');
-                              print('Qrcode');
+
+                              
                             }),
-                            // () async {
-                            //   // controller : controller;
-                            //   String scaning = (await BarcodeScanner.scan()) as String;
-                            //   setState(() {
-                            //     qrcodeResult = scaning;
-                            //     // print(qrcodeResult);
-                            //   });
-                            // },
+                           
                             child: const Text('Check In'),
                           ),
                         ),
@@ -185,9 +196,10 @@ class _ScanState extends State<Scan> {
                               .collection('Employee')
                               .doc('ujWkGkMi4WnTFMmrLdoG')
                               .update(dataqrcode);
+
                               ScanBarcode();
                               print('ScanBarcode ${ScanBarcode}');
-                              print('Qrcode');
+                             
                             }),
                             child: const Text('Check Out'),
                           ),
@@ -213,7 +225,7 @@ class _ScanState extends State<Scan> {
       setState(() {
         this.qrcodeResult = qrcodeResult;
       });
-      print('qrcodeResultaaaaaaaaaa $qrcodeResult');
+      print('qrcodeResultaa $qrcodeResult');
    } on PlatformException {
     qrcodeResult = 'Failed to get platform version';
    }

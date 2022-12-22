@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_application_1/Admin/Home/employeeChecktime.dart';
 import 'package:flutter_application_1/Admin/Home/employeeManagement.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,8 @@ class EmployeeAttenList extends StatefulWidget {
 }
 
 class _EmployeeAttenListState extends State<EmployeeAttenList> {
-  
+
+  final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
 
   final TextEditingController _date = TextEditingController();
 
@@ -97,34 +99,82 @@ class _EmployeeAttenListState extends State<EmployeeAttenList> {
  
   
   Widget _persion1(){
-  return FutureBuilder(
-      future: getDocIDs(),
-      builder: ((context, snapshot) {
+  return  StreamBuilder<QuerySnapshot>(
+      stream: users,
+      builder: ((context, snapshot){
+        if(snapshot.hasError){
+        return const Text('Something went Wrong.');
+        }
+        if(snapshot.connectionState == ConnectionState.waiting){
+        return const Text('Laoding.....');
+        }
+        final data = snapshot.requireData;
         return ListView.builder(
-          itemCount: docIDS.length,
-          itemBuilder: ((context, index) {
-            return Column(
+        itemCount: data.size,
+        itemBuilder: ((context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               children: [
-                ListTile(
-                title: GetNhanvien(document: docIDS[index],)
-                ),
-              ],
-            );
-          })
-        );
-      }
-    ),
-  );
+                SizedBox(
+                  height: 56,
+                  width: 327,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xffFFFFFF),
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                            BorderRadius.circular(10))),
+                      onPressed: (() {
+                        // print('Data ${data.docs[index]['joindate']}');
+                        // print('data');
+                      Navigator.push(context, MaterialPageRoute(builder: ((context) => TimeList(
+                        // name:data.docs[index]['name'],
+                        // designation: data.docs[index]['designation'],
+                        // id: data.docs[index]['id'],
+                        // email: data.docs[index]['email'], 
+                        // numberphone: data.docs[index]['numberphone'],
+                        // reference: data.docs[index]['reference'],
+                        // workingday:data.docs[index]['workingday'],
+                        ))));
+                        }),
+                    child:Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                        children: [
+                        CircleAvatar(backgroundColor: Colors.amber,child: Text('${data.docs[index]['designation']}'),),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('${data.docs[index]['name']}', style: const TextStyle(color: Color(0xff22215B),),),
+                              Text('${data.docs[index]['designation']}',style: const TextStyle(color: Color(0xff9090AD))),
+                            ],
+                          ),
+                        ),
+                        ],
+                        ),
+                        const Icon(Icons.arrow_forward_ios_rounded, color: Color(0xff9090AD),)
+                        ],
+                        )),
+                        )
+                        ],
+                      ),
+                    );
+                  }));
+   }));
 }
 
 Widget _addbutton(){
-  return const SizedBox(
+  return  SizedBox(
     width: 500,
     height: 500,
     child: FloatingActionButton(
       backgroundColor: Colors.blue,
-      onPressed: null,
-      child: Icon(Icons.add)),
+      onPressed:(() =>  Navigator.push(context, MaterialPageRoute(builder: (context)=>AddEmployee()))),
+      child: const Icon(Icons.add)),
   );
 }
   @override
@@ -256,102 +306,5 @@ class WoringModal extends ChangeNotifier {
       _ChoceDay = value;
       notifyListeners();
     }
-  }
-}
- final docId =[];//// k có cho commit file len 
-class GetNhanvien extends StatelessWidget {
-  final String document;
-
-  const GetNhanvien({required this.document});
-
-  //  Widget _containColor(){
-  //   RandomColor _randomColor = RandomColor();
-  //   Color _color = _randomColor.randomColor(
-  //     colorBrightness:ColorBrightness.light
-  //   );
-  //   return CircleAvatar(
-  //         // backgroundColor:  _randomColor,
-  //         child: Text('${data['id']??''}'),),
-  // }
-
-  @override
-  Widget build(BuildContext context) {
-    CollectionReference nhanvien = FirebaseFirestore.instance.collection('AddNhanvien');
-    return FutureBuilder<DocumentSnapshot>(
-      future: nhanvien.doc(document).get(),
-      builder: ((context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.done){
-          Map<String, dynamic> data = snapshot.data?.data()
-          as Map<String, dynamic>;
-          return SizedBox(
-            height: 56,
-            width: 327,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: ((context) => const TimeList())));
-              },
-              style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xffFFFFFF),
-              shape: RoundedRectangleBorder(
-                borderRadius:
-                      BorderRadius.circular(10))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        // backgroundColor:  _randomColor,
-                        child: Text('${data['designation']??''}'),),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('${data['name']}',
-                               textAlign: TextAlign.center,
-                               style: const TextStyle(
-                               color: Color(0xff22215B),
-                               fontSize: 10)),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('${data['designation']??''}',
-                              textAlign: TextAlign.center,
-                               style: const TextStyle(
-                                color: Color(0xff9090AD),
-                                fontSize: 10),
-                              ),
-                            ],
-                          ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                  padding: const EdgeInsets.only(left: 70),
-                  child: IconButton(
-                  onPressed: (() { }),
-                  icon: const Icon(Icons
-                      .arrow_forward_ios_outlined),
-                  color: const Color(
-                    0xff9090AD,
-                  )),
-                  ),
-                 ],
-                ),
-              )
-            );
-          }
-          return const Text('loading......');
-        }
-      )
-    );
   }
 }

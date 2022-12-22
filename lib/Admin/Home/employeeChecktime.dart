@@ -163,8 +163,7 @@ class CustomSearch extends SearchDelegate {
        }), icon: const Icon(Icons.arrow_back));
    
   }
-   final docId =[];//// k có cho commit file len 
-   final docsId =[];//// k có cho commit file len 
+   
   @override
   Widget buildResults(BuildContext context) {
 
