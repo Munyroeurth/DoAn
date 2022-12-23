@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/FirebaseTest/firesbase/editthongtinnhanvienFB.dart';
+import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
 import 'package:flutter_application_1/src/API/API_DIO/Post/PostDio.dart';
+
 
 class StaffInfo extends StatefulWidget {
   String? name;
@@ -30,7 +34,9 @@ class StaffInfo extends StatefulWidget {
 class _StaffInfoState extends State<StaffInfo> {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
+
+   final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
+   final user = Auth().currentUser;
 
     return  Scaffold(
       appBar: AppBar(title: const Text('Your Information')),
@@ -89,7 +95,7 @@ class _StaffInfoState extends State<StaffInfo> {
                                 width: 40,
                                 child: CircleAvatar(backgroundColor: Colors.purple,child: Text('ID:'),)),
                             ),
-                            Text(widget.id??'')
+                            Text(user?.uid ?? 'User Email', style: const TextStyle(fontSize: 13),),
                           ],
                         ),
                         ),
@@ -156,10 +162,10 @@ class _StaffInfoState extends State<StaffInfo> {
                                 Container(height: 1,color: Colors.black,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(widget.designation??''),
-                                    Text(widget.gender??''),
-                                    Text(widget.reference??""),
+                                  children: const [
+                                    // Text(widget.designation??''),
+                                    // Text(widget.gender??''),
+                                    // Text(widget.reference??""),
                                   ],
                                 )
                               ],

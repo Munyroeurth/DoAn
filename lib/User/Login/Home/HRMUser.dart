@@ -2,8 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
-import 'package:flutter_application_1/Admin/Home/employeeChecktime.dart';
 import 'package:flutter_application_1/User/Login/Home/AttendRequest.dart';
 import 'package:flutter_application_1/User/Login/Home/PhiChiLuong.dart';
 import 'package:flutter_application_1/User/Login/Home/qrcode/homeqrcodeScreen.dart';
@@ -37,8 +35,6 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
 
   final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
 
-  // final nhanvien = FirebaseAuth.instance.currentUser!;
-
   @override 
   void initState(){
     super.initState();
@@ -46,7 +42,6 @@ class _HRMUserScreenState extends State<HRMUserScreen> {
   }
  
   final User? user = Auth().currentUser;
-  // final AddNhanVien? user = Auth().currentUser as AddNhanVien?;
 
   Future<void> signOut() async {
     await Auth().signOut();

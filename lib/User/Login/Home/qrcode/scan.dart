@@ -1,3 +1,4 @@
+import 'dart:js_util';
 import 'dart:math';
 
 import 'package:barcode_scan2/barcode_scan2.dart';
@@ -5,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../../../../Admin/Login/SignIn/login/auth.dart';
 import 'homeqrcodeScreen.dart';
@@ -127,9 +129,10 @@ class _ScanState extends State<Scan> {
                           padding:  const EdgeInsets.only(top: 20),
                           child: Container(
                             height: 200,
-                            width: 200,
+                            width: 500,
                             decoration:  BoxDecoration(
-                              boxShadow:[ BoxShadow(color: Color.fromARGB(255, 196, 216, 244).withOpacity(0.5),
+                              boxShadow:[
+                              BoxShadow(color: const Color.fromARGB(255, 196, 216, 244).withOpacity(0.5),
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset: const Offset(0,2))],
@@ -138,12 +141,12 @@ class _ScanState extends State<Scan> {
                             child: Column(
                               children: [
                               Padding(
-                              padding: const EdgeInsets.only(top: 50, right: 10, left: 10),
+                              padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
                               child: Text(qrcodeResult,
                               textAlign: TextAlign.center, 
                               style: const TextStyle(
                                 fontWeight: FontWeight.normal,
-                                fontSize: 15),),
+                                fontSize: 13),),
                               ),
                               ],
                             ),
@@ -162,16 +165,8 @@ class _ScanState extends State<Scan> {
                               )
                             ),
                             onPressed: (() {
-                              Map<String,dynamic> dataqrcode = {"qrcodeLink":qrcodeResult};
-                              FirebaseFirestore.instance
-                              .collection('Employee')
-                              .doc('ujWkGkMi4WnTFMmrLdoG')
-                              .update(dataqrcode);
-
                               ScanBarcode();
-                              print('ScanBarcode ${ScanBarcode}');
-
-                              
+                              print('ScanBarcode ${ScanBarcode}'); 
                             }),
                            
                             child: const Text('Check In'),
@@ -191,14 +186,8 @@ class _ScanState extends State<Scan> {
                               )
                             ),
                             onPressed: (() {
-                              Map<String,dynamic> dataqrcode = {"qrcodeLink":qrcodeResult};
-                              FirebaseFirestore.instance
-                              .collection('Employee')
-                              .doc('ujWkGkMi4WnTFMmrLdoG')
-                              .update(dataqrcode);
-
                               ScanBarcode();
-                              print('ScanBarcode ${ScanBarcode}');
+                              print('ScanBarcode: ${ScanBarcode}');
                              
                             }),
                             child: const Text('Check Out'),
@@ -217,19 +206,25 @@ class _ScanState extends State<Scan> {
       ),
     );
   }
-  void ScanBarcode() async {
+  String? qrcodeId;
+  Future<AddNhanVien?> ScanBarcode() async {
+    AddNhanVien? userJson = [] as AddNhanVien?;
    try {
     final qrcodeResult = await FlutterBarcodeScanner.scanBarcode(
       "#ff6666", "Cancel", true, ScanMode.QR);
-      if (!mounted) return;
+      // .then((value) => 
+      // value.docs.map(e) =>{
+      //   AddNhanVien.fromJson(e.data()),
+      //   userJson.add(AddNhanVien.fromJson(e.data(),))
+      // });
+      if (!mounted) {
+      }
       setState(() {
-        this.qrcodeResult = qrcodeResult;
+        this.qrcodeResult = qrcodeResult; 
       });
       print('qrcodeResultaa $qrcodeResult');
    } on PlatformException {
     qrcodeResult = 'Failed to get platform version';
    }
-  }
-
- 
+  } 
 }

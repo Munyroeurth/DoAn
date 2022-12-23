@@ -722,7 +722,21 @@ class AddNhanVien {
     'gender':gender,
     'reference': reference 
   };
+factory AddNhanVien.fromJson(Map<String,dynamic> json){
+    return AddNhanVien(
+      id: json['id'] as String,
+      name: json['name']  as String, 
+      numberphone: json['numberphone'] as String,
+      email: json['email'] as String,
+      pass: json['password'] as String,
+      designation: json['designation'] as String,
+      workingday: json['workingday'] as String,
+      gender: json['gender'] as String,
+      reference: json['reference'] as String,
 
+      );
+      
+  }
   toLowerCase() {}
 }
 

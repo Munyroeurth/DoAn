@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
-import 'package:flutter_application_1/Admin/Home/employeeChecktime.dart';
 import 'package:flutter_application_1/User/Login/Home/qrcode/homeqrcodeScreen.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -18,31 +17,33 @@ class _generateState extends State<generate> {
 
   String qrData = "https://qldt.utc.edu.vn/CMCSoft.IU.Web.info/(S(23ljqbc1g2glmncz4ivhpbo3))/StudyRegister/StudyRegister.aspx";
   
-  
+  String? dataQr;
+  Future<List<AddNhanVien>> datasQrcode () async{
+    List<AddNhanVien> userJson = [];
+    print('Data: $userJson');
+    final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().
+     then((value) =>
+     value.docs.map((e) => {
+    //  print(" check user1111 ${e}"),
+     AddNhanVien.fromJson(e.data()),
+    //  print(" check user2222  ${ AddNhanVien.fromJson(e.data())}"),
+    userJson.add(AddNhanVien.fromJson(e.data()),)
+     }).toList()
+     );
+    // print(" check user  ${userJson}");
 
-  // final docDatas = [];
-
-  Future<AddNhanVien?> datasQrcode () async{
-    var userJson = {};
-    await FirebaseFirestore.instance.collection('AddNhanvien').where('id', isEqualTo: user.uid).get().then((value) => {
-      userJson = value.docs.first.data()
-    });
-    return AddNhanVien(
-      name: userJson['name'],
-     numberphone: userJson['numberphone'],
-      email: userJson['email'],
-      pass: userJson['password'],
-      designation:userJson['designation'],
-      workingday: userJson['workingday'], 
-      gender: userJson['gender'],
-      reference: userJson['reference']);
+    dataQr = "${userJson.map((e) => e.email).
+    toList()}${userJson.map((e) => e.id).
+    toList()}${userJson.map((e) => e.name).
+    toList()}${userJson.map((e) => e.designation).
+    toList()}${userJson.map((e) => e.numberphone).
+    toList()}${userJson.map((e) => e.gender).toList()}";
+    print(" check dat qr ${dataQr}");
+    return userJson;
   }
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text('Generate')),
       body: Column(
         children: [
           Expanded(
@@ -93,7 +94,7 @@ class _generateState extends State<generate> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             QrImage(
-                              data: '$datasQrcode',
+                              data: dataQr??'',
                               version: QrVersions.auto,
                               gapless: false,
                               size: 200,
@@ -153,7 +154,7 @@ class _generateState extends State<generate> {
                                     //     // qrData = qrText.text;
                                     //  });  
                                     // }
-                                    print("qrcodeData: ${datasQrcode}");
+                                    // print("qrcodeData: ${datasQrcode}");
                                   },
                                   child: const Text('QENERATE QRCODE'),
                                 ),
@@ -174,11 +175,4 @@ class _generateState extends State<generate> {
   }
   final qrText = TextEditingController();
 
-}
-
-class DatasUserQrcode {
-  String id = '';
-  String name ='';
-  String desination = '';
-  DatasUserQrcode({required this.desination, required this.id, required this.name});
 }
