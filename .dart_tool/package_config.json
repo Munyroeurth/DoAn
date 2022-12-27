@@ -141,7 +141,7 @@
     },
     {
       "name": "firebase_auth_web",
-      "rootUri": "file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.2.1",
+      "rootUri": "file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.2.2",
       "packageUri": "lib/",
       "languageVersion": "2.16"
     },
@@ -291,7 +291,7 @@
     },
     {
       "name": "intl",
-      "rootUri": "file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.17.0",
+      "rootUri": "file:///C:/Users/Admin/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -596,7 +596,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-12-23T07:19:23.317155Z",
+  "generated": "2022-12-26T04:17:48.362326Z",
   "generator": "pub",
   "generatorVersion": "2.19.0-444.2.beta"
 }

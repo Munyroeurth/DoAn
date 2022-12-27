@@ -1,7 +1,3 @@
-import 'dart:js_util';
-import 'dart:math';
-
-import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +6,7 @@ import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../../../../Admin/Login/SignIn/login/auth.dart';
 import 'homeqrcodeScreen.dart';
+import 'package:intl/intl.dart';
 class Scan extends StatefulWidget {
   const Scan({super.key});
 
@@ -19,7 +16,6 @@ class Scan extends StatefulWidget {
 
 class _ScanState extends State<Scan> {
 
-  final controllerqrcodeData = TextEditingController();
 
   String qrcodeResult = "Unknow";
   
@@ -128,7 +124,7 @@ class _ScanState extends State<Scan> {
                         Padding(
                           padding:  const EdgeInsets.only(top: 20),
                           child: Container(
-                            height: 200,
+                            height: 220,
                             width: 500,
                             decoration:  BoxDecoration(
                               boxShadow:[
@@ -136,25 +132,97 @@ class _ScanState extends State<Scan> {
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset: const Offset(0,2))],
-                            color: const Color.fromARGB(255, 230, 222, 222),
+                            color: const Color.fromARGB(255, 248, 246, 246),
                             borderRadius:BorderRadius.circular(10)),
-                            child: Column(
-                              children: [
-                              Padding(
-                              padding: const EdgeInsets.only(top: 10, right: 10, left: 10),
-                              child: Text(qrcodeResult,
-                              textAlign: TextAlign.center, 
-                              style: const TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 13),),
-                              ),
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                Container(
+                                  height: 90,
+                                  width: 400,
+                                  decoration:  BoxDecoration(
+                                  color: const Color(0xffFAFAFA),
+                                  borderRadius:BorderRadius.circular(10)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children:  const [
+                                            Text('Working Day',style: TextStyle(fontSize: 13),),
+                                            Text('Check In',style: TextStyle(fontSize: 13),),
+                                            Text('Check Out',style: TextStyle(fontSize: 13),),
+                                          ],
+                                        ),
+                                       
+                                        Container(height: 2, color: Colors.black,),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Text('TimeDate',style: TextStyle(fontSize: 13),),
+                                            Text('Check In:00:00',style: TextStyle(fontSize: 13),),
+                                            Text('Check Out:00:00',style: TextStyle(fontSize: 13),),
+                                            // Text('Check Out:$todayDate'),
+                                         
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Container(
+                                    height: 100,
+                                    width: 400,
+                                    decoration:  BoxDecoration(
+                                    color: const Color(0xffFAFAFA),
+                                    borderRadius:BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                         Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: const [
+                                            Text('Email'),
+                                            Text('ID')
+                                          ],
+                                         ),
+                                         Container(height: 2,color: Colors.black,),
+                                         Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(qrcodeemail??'',
+                                            textAlign: TextAlign.center, 
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),),
+                                            Text(qrcodeId??'',
+                                            textAlign: TextAlign.center, 
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12),),
+                                            ],
+                                          )
+                                         ],
+                                        ),
+                                      ),
+                                    ),
+                                ),
+                                ],
+                                ),
                             ),
                             ),
                           ),
                           //***************CHECK IN******** */
                         Padding(
-                          padding: const EdgeInsets.only(top: 20),
+                          padding: const EdgeInsets.only(top: 30),
                           child: SizedBox(
                           height: 54,
                           width: 280,
@@ -165,8 +233,10 @@ class _ScanState extends State<Scan> {
                               )
                             ),
                             onPressed: (() {
-                              ScanBarcode();
-                              print('ScanBarcode ${ScanBarcode}'); 
+                              // ScanBarcode();
+                              todayDate();
+                              // print('ScanBarcode ${ScanBarcode}'); 
+                              print('Check In: ${todayDate}');
                             }),
                            
                             child: const Text('Check In'),
@@ -185,10 +255,12 @@ class _ScanState extends State<Scan> {
                                 borderRadius: BorderRadius.circular(10)
                               )
                             ),
-                            onPressed: (() {
-                              ScanBarcode();
+                            onPressed: (()async{
+                              
+                              // ScanBarcode();
+                              todayDate();
                               print('ScanBarcode: ${ScanBarcode}');
-                             
+                              print('Check OUT: ${todayDate}');
                             }),
                             child: const Text('Check Out'),
                           ),
@@ -198,6 +270,7 @@ class _ScanState extends State<Scan> {
                    ]),
                   ),
                  )
+
                 ),
               ]
             )
@@ -206,25 +279,63 @@ class _ScanState extends State<Scan> {
       ),
     );
   }
-  String? qrcodeId;
-  Future<AddNhanVien?> ScanBarcode() async {
-    AddNhanVien? userJson = [] as AddNhanVien?;
-   try {
+
+  String? qrcodeId = 'UnKnow';  
+  String? qrcodeemail = 'Unknow';  
+  
+  Future<List<AddNhanVien?>> ScanBarcode() async {
+    List<AddNhanVien?> userJson = [];
+    try {
+    // final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().
+    // then((value) => 
+    // value.docs.map((e) => {
+    //   AddNhanVien.fromJson(e.data()),
+    //   userJson.add(AddNhanVien.fromJson(e.data()),)
+    //   // (AddNhanVien.fromJson(e.data()),)
+    // }).toList());
+    qrcodeId = "${user?.uid}";
+    qrcodeemail = "${user?.email}${user?.displayName}";
+
     final qrcodeResult = await FlutterBarcodeScanner.scanBarcode(
-      "#ff6666", "Cancel", true, ScanMode.QR);
-      // .then((value) => 
-      // value.docs.map(e) =>{
-      //   AddNhanVien.fromJson(e.data()),
-      //   userJson.add(AddNhanVien.fromJson(e.data(),))
-      // });
-      if (!mounted) {
-      }
-      setState(() {
-        this.qrcodeResult = qrcodeResult; 
+      "#ff6666", "Cancel", true, ScanMode.QR).then((value) => {
+        qrcodeId,qrcodeemail,
       });
-      print('qrcodeResultaa $qrcodeResult');
+      // if (!mounted) {
+      // }
+      setState(() {
+        qrcodeId = qrcodeId!;
+        qrcodeemail = qrcodeemail!;
+        // this.qrcodeResult = qrcodeResult!;
+        todayDate();
+      });
+      print('qrcodeResult: $qrcodeResult');
    } on PlatformException {
-    qrcodeResult = 'Failed to get platform version';
+     qrcodeResult = 'Failed to get platform version';
    }
+   return userJson;
   } 
+  /*******Time Check in hay Out*****************/
+
+  String? timeIn = 'Unknow';
+  String? timeOut = 'Unknow';
+ 
+  // List<AddNhanVien?> 
+  todayDate() {
+    qrcodeId = "${user?.uid}";
+    qrcodeemail = "${user?.email}${user?.displayName}";
+
+    var now =  DateTime.now();
+    var formatter =  DateFormat('dd-MM-yyyy');
+    String formattedTime = DateFormat('kk:mm:a').format(now);
+    String formattedDate = formatter.format(now);
+
+    print(formattedTime);
+    print(formattedDate);
+
+    // setState(() {
+    //   timeIn = timeIn;
+    //   timeOut = timeOut!;
+    // });
+  }
+  
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Admin/Home/addEmployee.dart';
 import 'package:flutter_application_1/FirebaseTest/firesbase/editthongtinnhanvienFB.dart';
 import 'package:flutter_application_1/User/Login/Home/signInUpUser/auth.dart';
 import 'package:flutter_application_1/src/API/API_DIO/Post/PostDio.dart';
@@ -37,7 +38,6 @@ class _StaffInfoState extends State<StaffInfo> {
 
    final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
    final user = Auth().currentUser;
-
     return  Scaffold(
       appBar: AppBar(title: const Text('Your Information')),
       body: Column(

@@ -51,6 +51,7 @@ dependencies:
   percent_indicator: ^4.2.2
   flutter_countdown_timer: ^4.1.0
   localstorage: ^4.0.0+1
+  intl: ^0.18.0
   # random_color: ^1.0.5
   # webview_flutter: ^3.0.4
 
@@ -60,7 +61,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   fl_country_code_picker: ^0.0.3+1
-  intl: ^0.17.0
   provider: ^6.0.4
   barcode_scan2: ^4.2.1
   # barcode_scan: any

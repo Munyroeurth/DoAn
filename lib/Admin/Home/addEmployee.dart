@@ -23,7 +23,6 @@ class _AddEmployeeState extends State<AddEmployee> {
     email: controllerEmail.text,
     password:controllerPass.text);
  }
- final docId =[];//// k có cho commit file len 
   final databaseReference  = FirebaseFirestore.instance;
 
   final controllerdate = TextEditingController();
@@ -683,7 +682,6 @@ Future createNhanvienUser(AddNhanVien user) async {
     final json = user.toJson();
     await docUser.set(json);
   }
-
 }
 //Make class for nhan vien
 class AddNhanVien {
@@ -708,7 +706,6 @@ class AddNhanVien {
     required this.workingday,
     required this.gender,
     required this.reference,
-
   });
   Map<String, dynamic> toJson()=>{
     // 'joiningdate':joiningdate,
@@ -738,6 +735,8 @@ factory AddNhanVien.fromJson(Map<String,dynamic> json){
       
   }
   toLowerCase() {}
+
+  map(Function(dynamic e) param0) {}
 }
 
 class DetailScreen extends StatelessWidget {

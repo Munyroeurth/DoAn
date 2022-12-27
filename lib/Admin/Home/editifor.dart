@@ -198,23 +198,22 @@ class _EditInforNVState extends State<EditInforNV> {
                         ),
                           onPressed: (() {
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>EditInforNV(
-                              name: widget.name.trim(),
-                               designation:widget.designation.trim(),
-                                id: widget.id.trim(),
-                                email: widget.id.trim(),
-                                reference: widget.reference.trim(),
-                                workingday: widget.workingday.trim()
+                              name: widget.name,
+                               designation:widget.designation,
+                                id: widget.id,
+                                email: widget.id,
+                                reference: widget.reference,
+                                workingday: widget.workingday
                                 )));
                               final docUser = FirebaseFirestore.instance
                               .collection('AddNhanvien')
                               .doc(widget.id);
                               // Update specific field
                               docUser.update({
-                                'name':widget.name,
-                                'email':widget.email,
-                                'designation':widget.designation,
-                                'workingday':widget.workingday,
-
+                                'name':  namecontroller.text,
+                                'email':emailcontroller.text,
+                                'designation':designationcontroller.text,
+                                'workingday':workingdaycontroller.text,
                                 // 'id' : 'M9',
                                 // 'name' : 'Puthika Molika',
                                 // 'numberphone' : '0939298220',
@@ -227,7 +226,7 @@ class _EditInforNVState extends State<EditInforNV> {
                                 // 'wfhlEMdj0VPplhipYZNW' : FieldValue.delete(),// delete some parameter
                               }).then((value) => print("Data Updated successfully")); 
                           }),
-                          child:const Text('Sumit', style: TextStyle(color: Color(0xff22215B), fontFamily: 'Manrope', fontSize: 20,fontWeight: FontWeight.bold),)),
+                          child:const Text('Submit', style: TextStyle(color: Color(0xff22215B), fontFamily: 'Manrope', fontSize: 20,fontWeight: FontWeight.bold),)),
                         ),
                      ),
                     ],

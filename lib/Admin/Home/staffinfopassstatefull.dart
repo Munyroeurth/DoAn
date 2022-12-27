@@ -229,8 +229,8 @@ class _PassDataState extends State<PassData> {
                                   onPressed: (() async {
                                     final deletUser = await FirebaseFirestore.instance
                                     .collection('AddNhanvien')
-                                    // .doc(widget.id);
-                                    .doc('4NYSmSBW9gFKTc6BwJE7');
+                                    .doc(widget.id);
+                                    // .doc('4NYSmSBW9gFKTc6BwJE7');
                                     deletUser.delete().then((value) => print("Data deleted successfully"));
                                     print(deletUser);
                                     // widget.id : FieldValue.delete();
@@ -258,7 +258,7 @@ class _PassDataState extends State<PassData> {
                                       )));
                                        final docUser = FirebaseFirestore.instance
                                         .collection('AddNhanvien')
-                                        .doc('4NYSmSBW9gFKTc6BwJE7');
+                                        .doc('0lbAzCEG5KIei3fqqtYh');
                                         // Update specific field
                                         docUser.update({
                                           // 'id' : 'M9',
@@ -272,7 +272,6 @@ class _PassDataState extends State<PassData> {
                                           'reference': 'Chị Mai Anh',
                                           // 'wfhlEMdj0VPplhipYZNW' : FieldValue.delete(),// delete some parameter
                                         }).then((value) => print("Data Added successfully"));
-                                       
                                     }),
                                child:const Text('Edit', style: TextStyle(color: Color(0xff22215B), fontFamily: 'Manrope', fontSize: 14,fontWeight: FontWeight.bold),)),
                               ),
