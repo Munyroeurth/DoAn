@@ -21,27 +21,16 @@ class _EmployeeListState extends State<EmployeeList> {
   //document IDs
   List<String> docIDs = [];
   // get docIDs
-  Future getDocIDs () async {
-    await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
-      (snapshot) => snapshot.docs.forEach(
-        (document){
-        print(document.reference);
-        docIDs.add(document.reference.id);
-        // print('doIDs ${docIDs}');
-      },
-    ));
-  }
-// chuyen tham so to man hin 2 
-  Future<void> NvigateIDUSer() async {
-
-    final responseIdUser = await FirebaseFirestore.instance.collection('AddNhanvienn').get().then(
-      (snapshot) => snapshot.docs.forEach((element) {
-        print(element.reference);
-        docIDs.add(element.reference.id);
-      })
-    );
-
-  }
+  // Future getDocIDs () async {
+  //   await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
+  //     (snapshot) => snapshot.docs.forEach(
+  //       (document){
+  //       print(document.reference);
+  //       docIDs.add(document.reference.id);
+  //       // print('doIDs ${docIDs}');
+  //     },
+  //   ));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -295,17 +284,17 @@ class _EmployeeListState extends State<EmployeeList> {
 
 class CustomSearch extends SearchDelegate {
 
-  List<String> docIDs = [];
+  List<AddNhanVien> docIDs = [];
 
   Future getDocIDs () async {
-    final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().then(
-      (snapshot) => snapshot.docs.forEach(
-        (document){
-        print(document.reference);
-        docIDs.add(document.reference.id);
-        // print('doIDs ${docIDs}');
-      },
-    ));
+    final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().then((value) => 
+    value.docs.map((e) => {
+      AddNhanVien.fromJson(e.data()),
+      docIDs.add(AddNhanVien.fromJson(e.data())),
+      
+    }).toList());
+
+    return docIDs;
     
   }
   
@@ -332,7 +321,7 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
 
-   List<String> matchQuery = [];
+   List<AddNhanVien> matchQuery = [];
     for(var item in docIDs){
       if(item.toLowerCase().contains(query.toLowerCase())){
         matchQuery.add(item);
@@ -348,10 +337,10 @@ class CustomSearch extends SearchDelegate {
         itemCount: matchQuery.length,
         itemBuilder: (context, index){
         var resualt = matchQuery[index];
-        // var resualtSearch = docIDs[index];
-        return  ListTile(
+        var resualtSearch = docIDs[index];
+        return   ListTile(
           // title: EmployeeList(),
-          title: GetNhanVienInformation(documentId: resualt[index])
+          title: GetNhanVienInformation(documentId: resualt.name,)
           // title: Text(resualt)
           );
         }
@@ -362,8 +351,7 @@ class CustomSearch extends SearchDelegate {
   
   @override
   Widget buildSuggestions(BuildContext context) {
-
-    List<String> matchQuery = [];
+    List<AddNhanVien> matchQuery = [];
     for(var item in docIDs){
       if(item.toLowerCase().contains(query.toLowerCase())){
         matchQuery.add(item);
@@ -377,10 +365,10 @@ class CustomSearch extends SearchDelegate {
         itemCount: matchQuery.length,
         itemBuilder: (context, index){
         var resualt = matchQuery[index];
-        debugPrint(resualt);
+        // debugPrint(resualt);
         return  ListTile(
           // title: EmployeeList(),
-          title: GetNhanVienInformation(documentId: docIDs[index],)
+          title: GetNhanVienInformation(documentId: resualt.name,)
           // title: Text(resualt)
           );
           }

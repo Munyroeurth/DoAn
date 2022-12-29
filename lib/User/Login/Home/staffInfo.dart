@@ -33,13 +33,12 @@ class StaffInfo extends StatefulWidget {
 }
 
 class _StaffInfoState extends State<StaffInfo> {
-  @override
-  Widget build(BuildContext context) {
-
    final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
    final user = Auth().currentUser;
+  @override
+  Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: AppBar(title: const Text('Your Information')),
+      appBar: AppBar(title: const Text('Your Information'), backgroundColor:  const Color(0xff567DF4),),
       body: Column(
         children: [
           Stack(
@@ -95,7 +94,7 @@ class _StaffInfoState extends State<StaffInfo> {
                                 width: 40,
                                 child: CircleAvatar(backgroundColor: Colors.purple,child: Text('ID:'),)),
                             ),
-                            Text(user?.uid ?? 'User Email', style: const TextStyle(fontSize: 13),),
+                            Text(user?.uid ?? 'User Id', style: const TextStyle(fontSize: 13),),
                           ],
                         ),
                         ),
@@ -126,9 +125,9 @@ class _StaffInfoState extends State<StaffInfo> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children:  [
-                                    Text(widget.name??''),
-                                    Text(widget.email??''),
-                                    Text(widget.numberphone??''),
+                                    Text(''),
+                                    Text(user?.displayName??''),
+                                    Text(''),
 
                                   ],
                                 )

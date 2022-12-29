@@ -717,7 +717,8 @@ class AddNhanVien {
     'designation':designation,
     'workingday':workingday,
     'gender':gender,
-    'reference': reference 
+    'reference': reference ,
+    
   };
 factory AddNhanVien.fromJson(Map<String,dynamic> json){
     return AddNhanVien(
@@ -730,13 +731,14 @@ factory AddNhanVien.fromJson(Map<String,dynamic> json){
       workingday: json['workingday'] as String,
       gender: json['gender'] as String,
       reference: json['reference'] as String,
+      // joiningdate: json['joiningdate'] as DateTime ,
 
       );
       
   }
   toLowerCase() {}
-
   map(Function(dynamic e) param0) {}
+  
 }
 
 class DetailScreen extends StatelessWidget {

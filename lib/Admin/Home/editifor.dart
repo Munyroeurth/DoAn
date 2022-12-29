@@ -54,7 +54,7 @@ class _EditInforNVState extends State<EditInforNV> {
                   topRight: Radius.circular(20)
                 )),
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(40.0),
                   child: Column(
                     children: [
                     Container(
@@ -90,7 +90,7 @@ class _EditInforNVState extends State<EditInforNV> {
                       )
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top:10.0, bottom: 10),
+                      padding: const EdgeInsets.only(top:10, bottom: 10),
                       child: Container(
                         height: 100,
                         width:336,
@@ -103,19 +103,20 @@ class _EditInforNVState extends State<EditInforNV> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
-                                  Text('Email'),
+                                  // Text('Email'),
                                   Text('IDs'),
                                   // Text('Password'),
                                 ],
                               ),
                               Container(height: 2, color: Colors.black,),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(widget.email),
-                                  Text(widget.id, style: const TextStyle(fontSize: 10),),
+                                  // Text(widget.email),
+                                  Text(''),
+                                  Text(widget.id, style: const TextStyle(fontSize: 13),),
                                   
                                 ],
                               )
@@ -124,48 +125,54 @@ class _EditInforNVState extends State<EditInforNV> {
                         )
                       ),
                     ),
-                    SizedBox(
-                    height: 45,
-                    width: 336,
-                    child: TextField(
-                      controller: namecontroller,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)
-                        ),
-                        hintText: widget.name,
-                        labelText: 'Name',
-                        
-                      )),
-                    ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      padding: const EdgeInsets.only(top: 20),
                       child: SizedBox(
                       height: 45,
                       width: 336,
                       child: TextField(
-                        controller: emailcontroller,
+                        controller: namecontroller,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)
                           ),
-                          hintText: widget.email,
-                          labelText: 'Email',
+                          hintText: widget.name,
+                          labelText: 'Name',
+                          
                         )),
                       ),
                     ),
-                    SizedBox(
-                    height: 45,
-                    width: 336,
-                    child: TextField(
-                      controller: designationcontroller,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)
-                        ),
-                        hintText: widget.designation,
-                        labelText: 'Designation',
-                      )),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    //   child: SizedBox(
+                    //   height: 45,
+                    //   width: 336,
+                    //   child: TextField(
+                    //     controller: emailcontroller,
+                    //     decoration: InputDecoration(
+                    //       border: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(10)
+                    //       ),
+                    //       hintText: widget.email,
+                    //       labelText: 'Email',
+                    //     )),
+                    //   ),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: SizedBox(
+                      height: 45,
+                      width: 336,
+                      child: TextField(
+                        controller: designationcontroller,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)
+                          ),
+                          hintText: widget.designation,
+                          labelText: 'Designation',
+                        )),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10,bottom:10),
@@ -188,7 +195,7 @@ class _EditInforNVState extends State<EditInforNV> {
                        padding: const EdgeInsets.only(top: 10),
                        child: SizedBox(
                         height: 45,
-                        width: 136,
+                        width: 336,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(255, 186, 209, 226),
@@ -207,11 +214,12 @@ class _EditInforNVState extends State<EditInforNV> {
                                 )));
                               final docUser = FirebaseFirestore.instance
                               .collection('AddNhanvien')
-                              .doc(widget.id);
+                              // .doc(widget.id);
+                              .doc('0lbAzCEG5KIei3fqqtYh');
                               // Update specific field
                               docUser.update({
                                 'name':  namecontroller.text,
-                                'email':emailcontroller.text,
+                                // 'email':emailcontroller.text,
                                 'designation':designationcontroller.text,
                                 'workingday':workingdaycontroller.text,
                                 // 'id' : 'M9',

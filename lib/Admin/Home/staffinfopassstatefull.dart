@@ -229,8 +229,8 @@ class _PassDataState extends State<PassData> {
                                   onPressed: (() async {
                                     final deletUser = await FirebaseFirestore.instance
                                     .collection('AddNhanvien')
-                                    .doc(widget.id);
-                                    // .doc('4NYSmSBW9gFKTc6BwJE7');
+                                    // .doc(widget.id);
+                                    .doc('BikA9bGe4CpPZird2Ruf');
                                     deletUser.delete().then((value) => print("Data deleted successfully"));
                                     print(deletUser);
                                     // widget.id : FieldValue.delete();
@@ -248,6 +248,7 @@ class _PassDataState extends State<PassData> {
                                     )
                                   ),
                                     onPressed: (() {
+                                      
                                       Navigator.push(context, MaterialPageRoute(builder: (context)=> EditInforNV(
                                         designation:widget.designation,
                                         email: widget.email,
@@ -258,7 +259,8 @@ class _PassDataState extends State<PassData> {
                                       )));
                                        final docUser = FirebaseFirestore.instance
                                         .collection('AddNhanvien')
-                                        .doc('0lbAzCEG5KIei3fqqtYh');
+                                        .doc(widget.id);
+                                        // .doc('0lbAzCEG5KIei3fqqtYh');
                                         // Update specific field
                                         docUser.update({
                                           // 'id' : 'M9',
@@ -267,9 +269,9 @@ class _PassDataState extends State<PassData> {
                                           'designation' : 'MB',
                                           'workingday' : 'Tuesday-Saturday',
                                           'gender' : 'Male',
-                                          'email':'deny@gmail.com',
+                                          // 'email':'deny@gmail.com',
                                           'password':'deny009',
-                                          'reference': 'Chị Mai Anh',
+                                          'reference': 'Chị Kim Anh',
                                           // 'wfhlEMdj0VPplhipYZNW' : FieldValue.delete(),// delete some parameter
                                         }).then((value) => print("Data Added successfully"));
                                     }),

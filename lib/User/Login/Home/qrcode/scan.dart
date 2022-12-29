@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +29,14 @@ class _ScanState extends State<Scan> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    CollectionReference nhanviens = FirebaseFirestore.instance.collection('AddNhanvien');
+    return FutureBuilder(
+      future: nhanviens.doc('xk4VVNrQVU0Evt25nX2k').get(),
+      builder: ((context, snapshot) {
+        if(snapshot.connectionState == ConnectionState.done){
+          Map<String,dynamic> data = 
+          snapshot.data!.data() as Map<String,dynamic>;
+          return Scaffold(
       body: Column(
         children: <Widget>[
           Container(
@@ -153,7 +162,7 @@ class _ScanState extends State<Scan> {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children:  const [
-                                            Text('Working Day',style: TextStyle(fontSize: 13),),
+                                            Text('Date',style: TextStyle(fontSize: 13),),
                                             Text('Check In',style: TextStyle(fontSize: 13),),
                                             Text('Check Out',style: TextStyle(fontSize: 13),),
                                           ],
@@ -162,10 +171,10 @@ class _ScanState extends State<Scan> {
                                         Container(height: 2, color: Colors.black,),
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: const [
-                                            Text('TimeDate',style: TextStyle(fontSize: 13),),
-                                            Text('Check In:00:00',style: TextStyle(fontSize: 13),),
-                                            Text('Check Out:00:00',style: TextStyle(fontSize: 13),),
+                                          children: [
+                                            Text('${data['date']}',style: TextStyle(fontSize: 13),),
+                                            Text('${data['timeIn']}',style: TextStyle(fontSize: 13),),
+                                            Text('${data['timeOut']}',style: TextStyle(fontSize: 13),),
                                             // Text('Check Out:$todayDate'),
                                          
                                           ],
@@ -233,8 +242,15 @@ class _ScanState extends State<Scan> {
                               )
                             ),
                             onPressed: (() {
-                              // ScanBarcode();
-                              todayDate();
+                               final docUser = FirebaseFirestore.instance
+                              .collection('AddNhanvien')
+                              .doc('xk4VVNrQVU0Evt25nX2k');
+                              docUser.update({
+                                'date' : Date(),
+                                'timeIn' : todayDate(),
+                                
+                              }).then((value) => print('TodayDate Successfully'),);
+                              ScanBarcode();
                               // print('ScanBarcode ${ScanBarcode}'); 
                               print('Check In: ${todayDate}');
                             }),
@@ -255,12 +271,20 @@ class _ScanState extends State<Scan> {
                                 borderRadius: BorderRadius.circular(10)
                               )
                             ),
-                            onPressed: (()async{
-                              
-                              // ScanBarcode();
-                              todayDate();
-                              print('ScanBarcode: ${ScanBarcode}');
+                            onPressed: (() {
+                              final docUser = FirebaseFirestore.instance
+                               .collection('AddNhanvien')
+                              //  .doc(widget.id)
+                              .doc('xk4VVNrQVU0Evt25nX2k');
+                              docUser.update({
+                                'date' : Date(),
+                                'timeOut' : todayDate(),
+                              }).then((value) => print('TodayDate Successfully'),);
+                              ScanBarcode();
+                              print('ScanBarcode: ${ScanBarcode.runtimeType}');
                               print('Check OUT: ${todayDate}');
+                              print('data:$docUser');
+                             
                             }),
                             child: const Text('Check Out'),
                           ),
@@ -275,9 +299,22 @@ class _ScanState extends State<Scan> {
               ]
             )
           )),
-        ],
+          ],
+          ),
+          );
+          }
+          return Container(
+            color: Colors.white,
+            child: const Padding(
+              padding: EdgeInsets.only(top: 50),
+              child: Text('Loading.....!', style: TextStyle(color: Colors.white,fontSize: 30),),
+            ));
+        }
+        
       ),
     );
+    
+   
   }
 
   String? qrcodeId = 'UnKnow';  
@@ -286,16 +323,8 @@ class _ScanState extends State<Scan> {
   Future<List<AddNhanVien?>> ScanBarcode() async {
     List<AddNhanVien?> userJson = [];
     try {
-    // final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().
-    // then((value) => 
-    // value.docs.map((e) => {
-    //   AddNhanVien.fromJson(e.data()),
-    //   userJson.add(AddNhanVien.fromJson(e.data()),)
-    //   // (AddNhanVien.fromJson(e.data()),)
-    // }).toList());
     qrcodeId = "${user?.uid}";
     qrcodeemail = "${user?.email}${user?.displayName}";
-
     final qrcodeResult = await FlutterBarcodeScanner.scanBarcode(
       "#ff6666", "Cancel", true, ScanMode.QR).then((value) => {
         qrcodeId,qrcodeemail,
@@ -314,28 +343,35 @@ class _ScanState extends State<Scan> {
    }
    return userJson;
   } 
+
+
   /*******Time Check in hay Out*****************/
 
   String? timeIn = 'Unknow';
   String? timeOut = 'Unknow';
  
-  // List<AddNhanVien?> 
-  todayDate() {
-    qrcodeId = "${user?.uid}";
-    qrcodeemail = "${user?.email}${user?.displayName}";
-
+  String todayDate() {
     var now =  DateTime.now();
     var formatter =  DateFormat('dd-MM-yyyy');
     String formattedTime = DateFormat('kk:mm:a').format(now);
     String formattedDate = formatter.format(now);
-
+ 
     print(formattedTime);
     print(formattedDate);
-
-    // setState(() {
-    //   timeIn = timeIn;
-    //   timeOut = timeOut!;
-    // });
-  }
+    return formattedTime ;
+  } 
+  /**** Date of Days */
+  String Date() {
+    var now =  DateTime.now();
+    var formatter =  DateFormat('dd-MM-yyyy');
+    String formattedTime = DateFormat('kk:mm:a').format(now);
+    String formattedDate = formatter.format(now);
+ 
+    print(formattedTime);
+    print(formattedDate);
+    return formattedDate ;
+   
+  } 
+ 
   
 }

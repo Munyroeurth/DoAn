@@ -40,7 +40,7 @@ class _HRMScreenState extends State<HRMScreen> {
             borderRadius:
                 BorderRadius.circular(10))),
         onPressed: signOut,
-        child: const Text('Sign Out', style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold, color: Colors.white, fontFamily: 'Manrope'),),
+        child: const Text('Sign Out', style: TextStyle(fontSize: 20,fontWeight: FontWeight.normal, color: Colors.white, fontFamily: 'Manrope'),),
       ),
     );
   }
@@ -484,7 +484,7 @@ class _HRMScreenState extends State<HRMScreen> {
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
-                            color: const Color(0xffE5E5E5),
+                            color: const Color(0xffFAFAFA),
                             border: Border.all(color: Colors.white, width: 0),
                             borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(30),

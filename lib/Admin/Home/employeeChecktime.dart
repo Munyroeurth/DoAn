@@ -314,12 +314,12 @@ class GettimeUser extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                      const Text('17 August 2022', style: TextStyle(color: Color(0xff9090AD), fontFamily: 'Manrope', fontSize: 12),),
+                      Text('${data['date']}', style: TextStyle(color: Color(0xff9090AD), fontFamily: 'Manrope', fontSize: 12),),
                       Padding(
                         padding: const EdgeInsets.only(left: 5,right: 50),
-                        child: Text('${data['Intime']}', style: const TextStyle(color: Color(0xff9090AD), fontFamily: 'Manrope', fontSize: 12),),
+                        child: Text('${data['timeIn']}', style: const TextStyle(color: Color(0xff9090AD), fontFamily: 'Manrope', fontSize: 12),),
                       ),
-                      Text('${data['Outtime']}', style: const TextStyle(color: Color(0xff9090AD), fontFamily: 'Manrope', fontSize: 12),),
+                      Text('${data['timeOut']}', style: const TextStyle(color: Color(0xff9090AD), fontFamily: 'Manrope', fontSize: 12),),
                       ],
                       ) 
                       ],
