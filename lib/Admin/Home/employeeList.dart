@@ -283,20 +283,22 @@ class _EmployeeListState extends State<EmployeeList> {
 }
 
 class CustomSearch extends SearchDelegate {
-
+  // var data = [];
   List<AddNhanVien> docIDs = [];
 
-  Future getDocIDs () async {
+  Future getDocIDs (String query) async {
     final res = await FirebaseFirestore.instance.collection('AddNhanvien').get().then((value) => 
     value.docs.map((e) => {
       AddNhanVien.fromJson(e.data()),
       docIDs.add(AddNhanVien.fromJson(e.data())),
-      
+      if(query != null){
+        docIDs = docIDs.where((element) => element.name.toLowerCase().contains(query.toLowerCase())).toList()
+      }
     }).toList());
-
     return docIDs;
-    
   }
+  
+ 
   
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -321,45 +323,110 @@ class CustomSearch extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
 
+  final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
+
    List<AddNhanVien> matchQuery = [];
     for(var item in docIDs){
       if(item.toLowerCase().contains(query.toLowerCase())){
         matchQuery.add(item);
         // this.docIDs = docIDs;
         print(matchQuery);
-        getDocIDs();
+        // getDocIDs();
       }
     }
-    return FutureBuilder(
-      future: getDocIDs(),
-      builder: ((context, snapshot) {
-        return ListView.builder(
-        itemCount: matchQuery.length,
-        itemBuilder: (context, index){
-        var resualt = matchQuery[index];
-        var resualtSearch = docIDs[index];
-        return   ListTile(
-          // title: EmployeeList(),
-          title: GetNhanVienInformation(documentId: resualt.name,)
-          // title: Text(resualt)
-          );
-        }
-        ); 
-      }),
-    );
+    return Container(
+      width: 700,
+      height: 700,
+      decoration: const BoxDecoration(
+      color: Color(0xffFAFAFA),
+      // boxShadow: BoxShadow(color: Colors.blue),
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+              topRight: Radius.circular(30))),
+        child: StreamBuilder<QuerySnapshot>(
+        stream: users,
+              builder: ((context, snapshot){
+            if(snapshot.hasError){
+            return const Text('Something went Wrong.');
+            }
+            if(snapshot.connectionState == ConnectionState.waiting){
+            return const Text('Laoding.....');
+            }
+            final data = snapshot.requireData;
+            return ListView.builder(
+            itemCount: data.size,
+            itemBuilder: ((context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+              SizedBox(
+                height: 56,
+                width: 327,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xffFFFFFF),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                          BorderRadius.circular(10))),
+                    onPressed: (() {
+                      // print('Data ${data.docs[index]['joindate']}');
+                      // print('data');
+                    Navigator.push(context, MaterialPageRoute(builder: ((context) =>   PassData(
+                      name:data.docs[index]['name'],
+                      designation: data.docs[index]['designation'],
+                      id: data.docs[index]['id'],
+                      email: data.docs[index]['email'], 
+                      numberphone: data.docs[index]['numberphone'],
+                      reference: data.docs[index]['reference'],
+                      workingday:data.docs[index]['workingday'],
+                      ))));
+                      }),
+                  child:Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                      children: [
+                      CircleAvatar(backgroundColor: Colors.amber,child: Text('${data.docs[index]['designation']}'),),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('${data.docs[index]['name']}', style: const TextStyle(color: Color(0xff22215B),),),
+                            Text('${data.docs[index]['designation']}',style: const TextStyle(color: Color(0xff9090AD))),
+                          ],
+                        ),
+                      ),
+                      ],
+                      ),
+                      const Icon(Icons.arrow_forward_ios_rounded, color: Color(0xff9090AD),)
+                      ],
+                      )),
+                      )
+                      ],
+                    ),
+                  );
+                }));
+              }))
+                    );
   }
   
   @override
   Widget buildSuggestions(BuildContext context) {
+
+    final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('AddNhanvien').snapshots();
+
+    // return 
     List<AddNhanVien> matchQuery = [];
     for(var item in docIDs){
       if(item.toLowerCase().contains(query.toLowerCase())){
         matchQuery.add(item);
-        getDocIDs();
+        // getDocIDs();
       }
     }
     return FutureBuilder(
-      future: getDocIDs(),
+      // future: users.(query:query),
       builder: ((context, snapshot) {
         return ListView.builder(
         itemCount: matchQuery.length,
